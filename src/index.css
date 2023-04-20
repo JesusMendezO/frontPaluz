@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+} 
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  font-family: 'Comfortaa', cursive;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #7a7f9d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #21295c;
+}
+
+/* Handle on Hover */
+::-webkit-scrollbar-track:hover {
+  background: #21295c;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.bg-img {
+  background-image: url('assets/paluz-bg-1.png');
+  background-size: 1550px;
+  background-repeat: no-repeat;
+}
+
+.bg-div{
+  margin-top: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute ;
+}
+
+.bg-img-2 {
+  background-image: url('assets/paluz-bg-inverted.png');
+  background-size: 1400px;
+  background-repeat: no-repeat;
+}
+
+.bg-div-2{
+  margin-top: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+@media screen and (max-width: 600px) {
+  .bg-div {
+   background-image: none !important;
+  }
+  .bg-div-2 {
+    background-image: none !important;
+   }
+}
+
+@media screen and (max-width: 900px) {
+  .bg-img {
+    background-image: url('assets/paluz-bg-1.png');
+    background-size: cover;
+    background-repeat: no-repeat ;
+  }
+  .bg-img-2 {
+    background-image: url('assets/paluz-bg-1.png');
+    background-size: cover;
+    background-repeat: no-repeat ;
+  }
+  
+}
+
+.zoom {
+  transition: transform 2s; /* Animation */
+}
+
+.zoom:hover {
+  transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+

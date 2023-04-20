@@ -1,0 +1,4 @@
+.scheduler-container {
+    height: calc(90vh - 50px - 200px);
+    width: 50vw;
+}
