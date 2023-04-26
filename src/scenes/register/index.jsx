@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,6 +22,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/es';
 import logo from 'assets/paluz-logo.png';
+import clienteAxios from '../../config/clienteAxios';
+import { useGetProcatQuery, useGetCategoriasQuery } from "state/api";
+import Alert from '@mui/material/Alert';
+
 
 function Copyright(props) {
     return (
@@ -60,26 +65,69 @@ const TextMaskCustom = React.forwardRef(function TextMaskCustom(props, ref) {
 const theme = createTheme();
 
 export default function Registro() {
-    const handleSubmit = (event) => {
+
+  let{ data, isLoading } = useGetProcatQuery();
+  let pro= useGetCategoriasQuery();
+  pro=pro.data
+  console.log(pro);
+    const handleSubmit = async event=> {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-        nombre: data.get('nombre'),
-        apellido: data.get('apellido'),
-        cedula: data.get('cedula'),
-        email: data.get('email'),
-        telefono: data.get('textmask'),
-        fnacimiento: data.get('fnac'),
-        ocupacion: data.get('ocupacion'),
-        direccion: data.get('direccion'),
-    });
+    let dataform = new FormData(event.currentTarget);
+   
+
+    try {
+      
+      const { data1 } = await clienteAxios.post('/perfil/voluntario/', {
+        nombres: dataform.get('nombre'),
+        apellidos: dataform.get('apellido'),
+        cedula: dataform.get('cedula'),
+        correo: dataform.get('email'),
+        telefono: dataform.get('textmask'),
+        fnacimiento:new Date(selectedDate).toLocaleDateString('es-ES') ,
+        ocupacion: dataform.get('ocupacion'),
+        direccion: dataform.get('direccion'),
+      })
+      .then(function (response) {
+        setAlerta({})
+        //console.log(response.data.idToken)
+          //localStorage.setItem('token',JSON.stringify(response.data) )
+          //setAuth(data)
+          event.target.reset();
+          setOcup('');
+          setAlertaF(false)
+          setAlerta(true)
+          handleDateChange(null);
+      })
+      .catch(function (error) {
+        event.preventDefault();
+        
+      
+        console.log('error')
+       // document.getElementById(":r7:").value='';
+
+        
+        setAlertaF(true)
+        setAlerta(false)
+      });
+    
+      
+      console.log(data1)
+      
+  } catch (error) {
+      
+  }
+
   };
 
   const nav = useNavigate();
-
+  const [alerta, setAlerta] = useState('')
+  const [alertaF, setAlertaF] = useState('')
   const [ocup, setOcup] = React.useState('');
+  const [date, setDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleChange = (event) => {
+    console.log("hola")
     setOcup(event.target.value);
   };
 
@@ -93,17 +141,20 @@ export default function Registro() {
       [event.target.name]: event.target.value,
     });
   };
-
+  const handleDateChange = (newValue) => {
+    setSelectedDate(newValue);
+  };
   const handleLinkClick = (event, message) => {
     if (message === 'inicio') {
       nav("/")
     }
+   
 
     console.log('Link clickeado');
     console.log(event.currentTarget);
     console.log(message);
   };
-
+  if (!data || isLoading || !pro) return "Loading..."
   return (
     <div className='bg-img bg-div'>
       <ThemeProvider theme={theme}>
@@ -183,10 +234,19 @@ export default function Registro() {
               <Grid item xs={12} sm={6}>
                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">  
                     {/*<DateField label="Fecha de Nacimiento" name="fnac" format="DD-MM-YYYY" required fullWidth />*/}
-                     <DatePicker 
+                    <DatePicker 
+                       id="fnac"
                        name="fnac"
                        label="Fecha/Nacimiento"
                        format="DD-MM-YYYY"
+                       clearable
+          disableFuture
+          value={selectedDate}
+          onChange={handleDateChange}
+                      //  onChange={(date) => {
+                      //   setDate(new Date(date).toLocaleDateString('es-ES'));
+                   
+                      // }}
                        sx={{ width: '100%', bgcolor:'white' }}
                       />
                  </LocalizationProvider>
@@ -194,6 +254,7 @@ export default function Registro() {
               <Grid item xs={12} sm={6}>
               <FormControl fullWidth required>
               <InputLabel id="ocupación-label"> Ocupación </InputLabel>
+             
               <Select
                 id="ocupacion"
                 name="ocupacion"
@@ -205,34 +266,30 @@ export default function Registro() {
                 <MenuItem value="">
                   <em>Seleccione su Ocupación</em>
                 </MenuItem>
-                <ListSubheader> Médicos </ListSubheader>
-                <MenuItem value={10}> Médico General</MenuItem>
-                <MenuItem value={20}> Médico Familiar</MenuItem>
-                <MenuItem value={30}> Ginecólogo </MenuItem>
-                <MenuItem value={40}> Internista </MenuItem>
+              
+                {/* {data.map(dato => {
+                return <ListSubheader> {dato.nombre} </ListSubheader>
+                 } )} */}
+                 
+                 {
+        data.map((dat,index)=>(
 
-                <ListSubheader> Estudiantes </ListSubheader>
-                <MenuItem value={50}> Primer Año </MenuItem>
-                <MenuItem value={60}> Segundo Año </MenuItem>
-                <MenuItem value={70}> Tercer Año </MenuItem>
-                <MenuItem value={80}> Cuarto Año </MenuItem>
-                <MenuItem value={90}> Quinto Año </MenuItem>
-                <MenuItem value={100}> Sexto Año </MenuItem>
+           <MenuItem value={dat.id_pro}>
+          {dat.descripcion}
+          </MenuItem>
+          
+          
+        ))
+       
 
-                <ListSubheader> Ingenieros </ListSubheader>
-                <MenuItem value={101}> Ing. Computación </MenuItem>
-                <MenuItem value={102}> Ing. Industrial </MenuItem>
-                <MenuItem value={103}> Ing. Sistemas </MenuItem>
 
-                <ListSubheader> Otras Especialidades </ListSubheader>
-                <MenuItem value={104}> Comunicador/a Social </MenuItem>
-                <MenuItem value={105}> Lic. en Administración </MenuItem>
-                <MenuItem value={106}> Lic. en Contaduría </MenuItem>
-                <MenuItem value={107}> Nutricionista </MenuItem>
-                <MenuItem value={108}> Psicólogo/a </MenuItem>
 
-                <ListSubheader> Miscelaneo </ListSubheader>
-                <MenuItem value={109}> Otro </MenuItem>
+      }
+
+                 
+
+                
+    
               </Select>
               </FormControl>
               </Grid>
@@ -276,6 +333,19 @@ export default function Registro() {
               </Grid>
             </Grid>
           </Box>
+          {
+          alerta ?  <Alert variant="filled" severity="success">
+  ¡Usuario creado exitosamente!
+</Alert> :''
+}
+{
+          alertaF ? <Alert variant="filled" severity="error">
+
+          ¡No se pudo registrar el usuario!
+       
+       </Alert>:''
+}
+
         </Box>
         <Copyright sx={{ mt: 3, mb: 3 }} />
       </Container>

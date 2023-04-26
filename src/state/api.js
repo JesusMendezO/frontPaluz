@@ -12,7 +12,11 @@ export const api = createApi({
     "Sales",
     "Admins",
     "Performance",
+    "Profesiones",
     "Dashboard",
+    "Categorias",
+    "Procat",
+    "Usuarios",
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -51,9 +55,25 @@ export const api = createApi({
       query: (id) => `management/performance/${id}`,
       providesTags: ["Performance"],
     }),
+    getProfesiones: build.query({
+      query: () => "api/profesiones",
+      providesTags: ["Profesiones"],
+    }),
     getDashboard: build.query({
       query: () => "general/dashboard",
       providesTags: ["Dashboard"],
+    }),
+    getCategorias: build.query({
+      query: () => "api/categorias",
+      providesTags: ["Categorias"],
+    }),
+    getProcat: build.query({
+      query: () => "api/profesionescat",
+      providesTags: ["Procat"],
+    }),
+    getUsuarios: build.query({
+      query: () => "api/usuarios",
+      providesTags: ["Usuarios"],
     }),
   }),
 });
@@ -68,4 +88,8 @@ export const {
   useGetAdminsQuery,
   useGetUserPerformanceQuery,
   useGetDashboardQuery,
+  useGetProfesionesQuery,
+   useGetCategoriasQuery,
+   useGetProcatQuery,
+   useGetUsuariosQuery,
 } = api;
