@@ -96,6 +96,9 @@ export default function Registro() {
           setOcup('');
           setAlertaF(false)
           setAlerta(true)
+          setTimeout(function(){
+            setAlerta(false);
+        }, 3000);
           handleDateChange(null);
       })
       .catch(function (error) {
@@ -106,8 +109,11 @@ export default function Registro() {
        // document.getElementById(":r7:").value='';
 
         
-        setAlertaF(true)
-        setAlerta(false)
+        setAlertaF(true);
+        setTimeout(function(){
+          setAlertaF(false);
+      }, 3000);
+        setAlerta(false);
       });
     
       
@@ -158,6 +164,22 @@ export default function Registro() {
   return (
     <div className='bg-img bg-div'>
       <ThemeProvider theme={theme}>
+      <div style={{ position: 'relative', marginTop:5, marginRight:5 }}>
+      {
+          alerta ?  <Alert variant="filled" severity="success" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
+  ¡Usuario creado exitosamente!
+</Alert> :''
+}
+{
+          alertaF ? <Alert variant="filled" severity="error" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
+
+          ¡No se pudo registrar el usuario!
+       
+       </Alert>:''
+}
+
+          
+        </div>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
