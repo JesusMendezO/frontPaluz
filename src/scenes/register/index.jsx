@@ -355,19 +355,7 @@ export default function Registro() {
               </Grid>
             </Grid>
           </Box>
-          {
-          alerta ?  <Alert variant="filled" severity="success">
-  ¡Usuario creado exitosamente!
-</Alert> :''
-}
-{
-          alertaF ? <Alert variant="filled" severity="error">
-
-          ¡No se pudo registrar el usuario!
-       
-       </Alert>:''
-}
-
+    
         </Box>
         <Copyright sx={{ mt: 3, mb: 3 }} />
       </Container>
