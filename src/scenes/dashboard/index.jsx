@@ -1,4 +1,5 @@
 import React from "react";
+import { useState,useEffect } from 'react';
 import FlexBetween from "components/FlexBetween";
 import Header from "components/Header";
 import {
@@ -23,11 +24,23 @@ const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data } = useGetDashboardQuery();
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('token'));
+    if (items) {
+     setItems(items);
+    }
+  }, []);
+  
+
+
+
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Header title="Bienvenido, <Usuario>" />
+        <Typography variant="h2" sx={{ fontWeight:'bold', mt:2 }} > Bienvenido, {items.nombre} </Typography>
       </FlexBetween>
 
       <Box

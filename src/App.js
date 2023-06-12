@@ -23,7 +23,7 @@ import AdminEquipos from "scenes/proyectos/adminEquipos";
 import GestionProyectos from "scenes/proyectos/gestionProyectos";
 import CrearActividad from "scenes/voluntariado/crearActividad";
 import AceptarUsuarios from "scenes/admin/aceptarUsuarios";
-
+import CreatePass from "scenes/createPass";
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -36,6 +36,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/resetPass" element={<ResetPass />} />
+            <Route path="/createPass" element={<CreatePass />} />
             <Route element={<Layout />}>
               {/*<Route path="/" element={<Navigate to="/inicio" replace />} />*/}
               <Route path="/inicio" element={<Dashboard />} />

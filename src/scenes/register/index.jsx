@@ -160,7 +160,7 @@ export default function Registro() {
     console.log(event.currentTarget);
     console.log(message);
   };
-  if (!data || isLoading || !pro) return "Loading..."
+  if (!data || isLoading || !pro) return "Loading...";
   return (
     <div className='bg-img bg-div'>
       <ThemeProvider theme={theme}>

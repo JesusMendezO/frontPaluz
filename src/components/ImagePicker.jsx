@@ -6,7 +6,8 @@ import Tooltip from '@mui/material/Tooltip';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ImagePicker = () => {
+const ImagePicker = (props) => {
+  var image = props.image
     const [logo, setLogo] = useState("");
 
     const handleCreateBase64 = useCallback(async (e) =>{
@@ -25,6 +26,27 @@ const ImagePicker = () => {
                 fileReader.readAsDataURL(file);
                 fileReader.onload = () => {
                     resolve(fileReader.result);
+                    let bas64=fileReader.result;
+                    const myRequest = new Request(bas64);
+
+fetch(myRequest)
+  .then((response) => response.blob())
+  .then((myBlob) => {
+   console.log(myBlob)
+  });
+                
+  var mystring = "Hello World!";
+var myblobb = new Blob([mystring], {
+    type: 'text/plain'
+});
+
+                    console.log(myblobb);
+                    var reader = new FileReader();
+reader.onload = function() {
+    alert(reader.result);
+}
+reader.readAsText(myblobb);
+
                 };
             }
             fileReader.onerror = (error) => {

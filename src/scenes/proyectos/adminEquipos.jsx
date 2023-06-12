@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import MaterialReactTable from 'material-react-table';
+import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useTheme, useMediaQuery } from '@mui/material';
-import Header from "components/Header";
-import Container from '@mui/material/Container';
+import { useTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import { DataGrid, esES } from "@mui/x-data-grid";
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -15,7 +15,11 @@ import Grid from '@mui/material/Grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import HomeIcon from '@mui/icons-material/Home';
 import CasesRoundedIcon from '@mui/icons-material/CasesRounded';
 import GroupIcon from '@mui/icons-material/Group';
@@ -33,66 +37,9 @@ const style = {
     p: 4,
   };
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'firstName',
-      headerName: 'First name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'lastName',
-      headerName: 'Last name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
-      editable: true,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
-    {
-        field: 'acciones',
-        headerName: 'Acciones',
-        width: 150,
-        headerAlign: 'center',
-        align: 'center',
-        renderCell: (cellValues) => {
-          return (
-        <Box>
-          <Button variant='contained' sx={{ bgcolor:'#e6b800', color:'black' }} > <EditIcon /> </Button>
-          <Button variant='contained' color='error' sx={{ ml:1 }}> <DeleteIcon /> </Button>
-        </Box>
-          );
-        }
-      },
-  ];
-  
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
-
 const AdminEquipos = () => {
+
+   const nav = useNavigate();
 
     function handleClickBreadCrumbs(event) {
         event.preventDefault();
@@ -104,7 +51,164 @@ const AdminEquipos = () => {
     const handleClose = () => setOpen(false);
 
     const theme = useTheme();
-    const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+
+    //DropDown Button
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const openDropDown = Boolean(anchorEl);
+    const handleDropDown = (event) => {
+    setAnchorEl(event.currentTarget);
+    };
+    const handleCloseDropDown = () => {
+    setAnchorEl(null);
+    };
+
+    //Routes
+    const handleLinkHome = (event, message) => {
+      if (message === 'home') {
+        nav("/inicio")
+      }
+    };
+    
+    const handleLinkProjects = (event, message) => {
+      if (message === 'proyectos') {
+        nav("/proyectos")
+      }
+    };
+
+    const columns = useMemo(() => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 10,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+      },
+      {
+        accessorKey: 'middleName',
+        header: 'Middle Name',
+      },
+      {
+        accessorKey: 'lastName',
+        header: 'Last Name',
+      },
+    ],
+    [],
+  );
+  
+  const data = [
+    {
+      id: '1',
+      firstName: 'Dylan',
+      middleName: 'Sprouse',
+      lastName: 'Murray',
+      address: '261 Erdman Ford',
+      city: 'East Daphne',
+      state: 'Kentucky',
+      country: 'United States',
+    },
+    {
+      id: '2',
+      firstName: 'Raquel',
+      middleName: 'Hakeem',
+      lastName: 'Kohler',
+      address: '769 Dominic Grove',
+      city: 'Vancouver',
+      state: 'British Columbia',
+      country: 'Canada',
+    },
+    {
+      id: '3',
+      firstName: 'Ervin',
+      middleName: 'Kris',
+      lastName: 'Reinger',
+      address: '566 Brakus Inlet',
+      city: 'South Linda',
+      state: 'West Virginia',
+      country: 'United States',
+    },
+    {
+      id: '4',
+      firstName: 'Brittany',
+      middleName: 'Kathryn',
+      lastName: 'McCullough',
+      address: '722 Emie Stream',
+      city: 'Lincoln',
+      state: 'Nebraska',
+      country: 'United States',
+    },
+    {
+      id: '5',
+      firstName: 'Branson',
+      middleName: 'John',
+      lastName: 'Frami',
+      address: '32188 Larkin Turnpike',
+      city: 'Charleston',
+      state: 'South Carolina',
+      country: 'United States',
+    },
+    {
+      id: '6',
+      firstName: 'Branson',
+      middleName: 'John',
+      lastName: 'Frami',
+      address: '32188 Larkin Turnpike',
+      city: 'Charleston',
+      state: 'South Carolina',
+      country: 'United States',
+    },
+    {
+      id: '7',
+      firstName: 'Branson',
+      middleName: 'John',
+      lastName: 'Frami',
+      address: '32188 Larkin Turnpike',
+      city: 'Charleston',
+      state: 'South Carolina',
+      country: 'United States',
+    },
+    {
+      id: '8',
+      firstName: 'Branson',
+      middleName: 'John',
+      lastName: 'Frami',
+      address: '32188 Larkin Turnpike',
+      city: 'Charleston',
+      state: 'South Carolina',
+      country: 'United States',
+    },
+    {
+      id: '9',
+      firstName: 'Branson',
+      middleName: 'John',
+      lastName: 'Frami',
+      address: '32188 Larkin Turnpike',
+      city: 'Charleston',
+      state: 'South Carolina',
+      country: 'United States',
+    },
+    {
+      id: '10',
+      firstName: 'Branson',
+      middleName: 'John',
+      lastName: 'Frami',
+      address: '32188 Larkin Turnpike',
+      city: 'Charleston',
+      state: 'South Carolina',
+      country: 'United States',
+    },
+    {
+      id: '11',
+      firstName: 'Branson',
+      middleName: 'John',
+      lastName: 'Frami',
+      address: '32188 Larkin Turnpike',
+      city: 'Charleston',
+      state: 'South Carolina',
+      country: 'United States',
+    },
+  ];
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -115,6 +219,7 @@ const AdminEquipos = () => {
       sx={{ display:'flex', alignItems:'center' }}
       color="inherit"
       href="/inicio"
+      onClick={event => handleLinkHome(event, 'home')}
     >
       <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
       Inicio
@@ -124,6 +229,7 @@ const AdminEquipos = () => {
       sx={{ display:'flex', alignItems:'center' }}
       color="inherit"
       href="/proyectos"
+      onClick={event => handleLinkProjects(event, 'proyectos')}
     >
       <CasesRoundedIcon sx={{ mr: 0.5 }} fontSize="inherit" />
       Proyectos
@@ -133,9 +239,10 @@ const AdminEquipos = () => {
       color="text.primary"
     >
       <GroupIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-      Administrrar Equipos
+      Administrar Equipos
     </Typography>
   </Breadcrumbs>
+  <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Administrar Equipos </Typography>
 </Box>
      <Box
        gridColumn="span 2"
@@ -143,16 +250,12 @@ const AdminEquipos = () => {
        display="flex"
        flexDirection="column"
        justifyContent="space-between"
-       p="1.25rem 1rem"
+       p="1rem 1rem"
        flex="1 1 100%"
        borderRadius="0.55rem"
       >
-         <CssBaseline />
- 
-         <Container>
-         <Box container sx={{ display:'flex', justifyContent:'flex-end', alignItems:'flex-end' }}>
-             <Button variant='contained' startIcon={<GroupAddIcon />} sx={{ bgcolor:'teal', color:'white' }} onClick={handleOpen}> Agregar Equipo </Button>
-         </Box>
+      <CssBaseline />
+      <Container>
          <Modal
           open={open}
           onClose={handleClose}
@@ -165,7 +268,7 @@ const AdminEquipos = () => {
              </Typography>
              <Divider />
              <Grid container spacing={2} mt={2} mb={3}>
-         <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
             <TextField
               name="nombreEquipo"
               required
@@ -196,7 +299,7 @@ const AdminEquipos = () => {
           <Divider />
           <Grid container sx={{ mt:2 }} spacing={1} justifyContent="center" >
             <Grid item sm={6} xs={6}>
-              <Button variant='contained' color='error' size='large' fullWidth> Cancelar </Button>
+              <Button variant='contained' color='error' size='large' fullWidth onClick={handleClose}> Cancelar </Button>
             </Grid>
             <Grid item sm={6} xs={6}>
               <Button variant='contained' sx={{ bgcolor:'teal', color:'white' }} size='large' fullWidth> Guardar </Button>
@@ -204,58 +307,132 @@ const AdminEquipos = () => {
           </Grid>
            </Box>
           </Modal>
-        <Box
-         gridColumn="span 8"
-         gridRow="span 3"
-         backgroundColor={theme.palette.background.alt}
-         p="1.5rem"
-         borderRadius="0.55rem"
-         mt="20px"
-         height="75vh"
-         sx={{
-         "& .MuiDataGrid-root": {
-           border: "none",
-         },
-         "& .MuiDataGrid-cell": {
-         borderBottom: "none",
-         },
-         "& .MuiDataGrid-columnHeaders": {
-           backgroundColor: theme.palette.background.alt,
-           color: theme.palette.secondary[100],
-           borderBottom: "none",
-         },
-         "& .MuiDataGrid-virtualScroller": {
-           backgroundColor: theme.palette.primary.light,
-         },
-         "& .MuiDataGrid-footerContainer": {
-           backgroundColor: theme.palette.background.alt,
-           color: theme.palette.secondary[100],
-           borderTop: "none",
-         },
-         "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-           color: `${theme.palette.secondary[200]} !important`,
-         },
-       }}
+          <Box 
+          gridColumn="span 8"
+          gridRow="span 3"
+          backgroundColor={theme.palette.background.alt}
+          p="1.5rem"
+          borderRadius="1.5rem"
+          mt="5px"
+          height="fit-content"
+          sx={{ boxShadow: 4 }}
          >
-         <DataGrid
-        rows={rows}
-        columns={columns}
-        localeText={esES.components.MuiDataGrid.defaultProps.localeText}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
-         </Box>
-         </Container>
-      </Box>
+  <Grid container spacing={2}>
+    <Grid item xs={12} sm={6}>
+      <Typography variant='h5' sx={{ fontWeight:'bold' }}> Listado de Equipos </Typography>
+    </Grid>
+    <Grid item xs={12} sm={6}>
+     <Box container sx={{ display:'flex', justifyContent:'flex-end', alignItems:'flex-end' }}>
+        <Button variant='contained' startIcon={<GroupAddIcon />} sx={{ bgcolor:'teal', color:'white' }} onClick={handleOpen}> Nuevo Equipo </Button>
+     </Box>
+    </Grid>
+  </Grid>
+
+  <MaterialReactTable 
+  columns={columns}
+  data={data}
+  localization={MRT_Localization_ES}
+  enableRowActions 
+  positionActionsColumn="last" 
+  renderRowActions={({
+    row
+  }) => <div style={{
+    display: 'flex',
+    flexWrap: 'nowrap',
+    gap: '0.5rem'
+  }}> 
+  <Button
+    id="basic-button"
+    sx={{ bgcolor:'teal', color:'white' }}
+    variant="contained"
+    aria-controls={open ? 'basic-menu' : undefined}
+    aria-haspopup="true"
+    aria-expanded={open ? 'true' : undefined}
+    onClick={handleDropDown}
+    endIcon={ <ArrowDropDownIcon /> }
+  >
+    Opciones
+  </Button>
+  <Menu
+    id="basic-menu"
+    anchorEl={anchorEl}
+    open={openDropDown}
+    onClose={handleCloseDropDown}
+    MenuListProps={{
+      'aria-labelledby': 'basic-button',
+    }}
+  >
+    <MenuItem onClick={handleCloseDropDown}> <EditIcon sx={{ mr:1 }} /> Editar Equipo </MenuItem>
+    <MenuItem onClick={handleCloseDropDown}> <DeleteIcon sx={{ mr:1 }} /> Eliminar Equipo </MenuItem>
+  </Menu>
+
+  </div>}
+  muiTopToolbarProps={{ 
+    sx: {
+      backgroundColor: theme.palette.background.alt,
+    }, 
+   }}
+  muiTableHeadCellProps={{
+    align: 'center',
+    sx: {
+      backgroundColor: theme.palette.background.alt,
+    },
+  }}
+  muiBottomToolbarProps={{ 
+    sx: {
+      backgroundColor: theme.palette.background.alt,
+    },
+   }}
+  muiTableBodyProps={{
+    sx: {
+      '& tr:nth-of-type(odd)': {
+        backgroundColor: theme.palette.background.light,
+      },
+    },
+  }}
+  muiTableBodyCellProps={{
+    align: 'center'
+  }}
+  muiTablePaperProps={{
+    elevation: 0, //change the mui box shadow
+    //customize paper styles
+  }}
+  initialState={{
+    pagination: {
+      pageSize: 5,
+      pageIndex: 0
+    }
+  }} muiTablePaginationProps={{
+    rowsPerPageOptions: [5, 10, 20, 30, 50, 100],
+    showFirstButton: false,
+    showLastButton: false,
+    SelectProps: {
+      native: true
+    },
+    labelRowsPerPage: 'Número de filas visibles'
+  }}
+  
+  renderDetailPanel={({ row }) => (
+    <Box
+      sx={{
+        display: 'grid',
+        margin: 'auto',
+        gridTemplateColumns: '1fr 1fr',
+        width: '100%',
+      }}
+    >
+      <Typography>Address: {row.original.address}</Typography>
+      <Typography>City: {row.original.city}</Typography>
+      <Typography>State: {row.original.state}</Typography>
+      <Typography>Country: {row.original.country}</Typography>
     </Box>
+  )}
+  />
+         
+  </Box>
+  </Container>
+  </Box>
+  </Box>
   )
 }
 

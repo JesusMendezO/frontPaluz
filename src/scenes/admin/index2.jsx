@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { useState,useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import { Box, Button, Grid, useTheme, useMediaQuery} from "@mui/material";
+import { DataGrid, esES } from "@mui/x-data-grid";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Divider from '@mui/material/Divider';
@@ -13,141 +13,24 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
-import Tooltip from '@mui/material/Tooltip';
 import HomeIcon from '@mui/icons-material/Home';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import AcceptTab from "components/AcceptTab";
-import clienteAxios from '../../config/clienteAxios';
-import { useGetUsuariosQuery,useGetRolesQuery,useGetTiposQuery, useGetVoluntariosQuery } from "state/api";
+import { useGetUsuariosQuery,useGetRolesQuery,useGetTiposQuery } from "state/api";
 const Admin = () => {
-    const [open, setOpen] = React.useState(false);
-    const [ejecutar, setEjecutar] = React.useState(true);
-    const [datoVo, setdatoVo] = React.useState({});
-    const [data, setData]= React.useState([]);
-    const [datosUsuario, setDatosUsuario]= React.useState({});
-    const [user, setUser]= React.useState([]);
+  
   //Theme
   const theme = useTheme();
-  let voluntarios = useGetVoluntariosQuery();
   let usuarios= useGetUsuariosQuery();
   let tipos = useGetTiposQuery();
   let roles = useGetRolesQuery();
-
-  const voluntariosO = async ()=> {
-    
-
-   
-
-    try {
-      
-      const { data1 } = await clienteAxios.get('/voluntarios/')
-      .then(function (response) {
-       // setAlerta({})
-       
-       setData(response.data);
-     
-       return
-      })
-      .catch(function (error) {
-      
-        
-      
-        console.log('error')
-       return
-      });
-    
-      
-      
-      
-  } catch (error) {
-      return
-  }
-
-  };
-  const userS= async ()=> {
-    
-
-   
-
-    try {
-      
-      const { data1 } = await clienteAxios.get('/usuarios/')
-      .then(function (response) {
-       // setAlerta({})
-       
-       setUser(response.data);
-       setEjecutar(false);
-       return
-      })
-      .catch(function (error) {
-      
-        
-      
-        console.log('error')
-       return
-      });
-    
-      
-      
-      
-  } catch (error) {
-      return
-  }
-
-  };
-  if(ejecutar){
-    voluntariosO();
-  userS();
-}
-const handleSubmit = async ()=>{
-    try {
-      
-        const { data1 } = await clienteAxios.put('/perfil/cuentausuario/', {
-           
-          
-           correo: datosUsuario.email,
-           rol:rol,
-           tipo:vol,
-           estado:est,
-           token:datosUsuario.token,
-           nombres:datosUsuario.nombres
-        
-        })
-        .then(function (response) {
-         // setAlerta({})
-          //console.log(response.data.idToken)
-            //localStorage.setItem('token',JSON.stringify(response.data) )
-            //setAuth(data)
-            setOpen(false);
-           
-        })
-        .catch(function (error) {
-          
-          
-        
-          console.log('error')
-         // document.getElementById(":r7:").value='';
-  
-          
-          
-        });
-      
-        
-        setOpen(false);
-        
-    } catch (error) {
-         
-    }
-}
-//console.log(data);
-console.log(user);
   //BreadCrumbs
   function handleClickBreadCrumbs(event) {
   event.preventDefault();
   console.info('You clicked a breadcrumb.');
 }
 
+console.log(usuarios)
+console.log(roles)
   const style = {
     position: 'inherit',
     top: '50%',
@@ -163,54 +46,32 @@ console.log(user);
   
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
-  
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setRol('');
-    setEst('');
-    setVol('');
-setEjecutar(true);
-    setOpen(false);
-   
-};
-
-  const [openAM, setOpenAM] = React.useState(false);
-
-  
-
-
-
-  const handleOpenAM = (dato) =>{
-    
-setdatoVo(dato)
-    setOpenAM(true);
-  } 
-  const handleCloseAM = () => {
- setEjecutar(true);
-    setOpenAM(false)
-  
-  
-};
+  const [open, setOpen] = React.useState(false);
+  const [user, setUser] = React.useState({});
+  const handleOpen = (dato) => {
+    console.log(dato)
+    setUser(dato)
+    setOpen(true)};
+  const handleClose = () => setOpen(false);
 
   //Rol de Usuario Select
   const [rol, setRol] = React.useState('');
   const handleChangeRol = (event) => {
+    console.log('holaa')
     setRol(event.target.value);
-    console.log(rol);
   };
 
   // Estado De Usuario Select
   const [est, setEst] = React.useState('');
   const handleChangeEst = (event) => {
+    console.log('holaa')
     setEst(event.target.value);
-    console.log(est);
   };
 
   //Tipo de Voluntario Select
   const [vol, setVol] = React.useState('');
   const handleChangeVol = (event) => {
     setVol(event.target.value);
-    console.log(vol);
   };
   
   
@@ -220,19 +81,32 @@ setdatoVo(dato)
     {
       accessorKey: 'nombres',
       header: 'Nombre',
-      size: 1,
+      size: 10,
     },
     {
       accessorKey: 'apellidos',
       header: 'Apellido',
-      size: 1,
+    },
+    {
+      accessorKey: 'ocupacion',
+      header: 'ocupacion',
+    },
+    {
+      accessorKey: 'tipo',
+      header: 'tipo',
+    },
+    {
+      accessorKey: 'rol',
+      header: 'rol',
     },
   ],
   [],
 );
 
 
-if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.status !== 'fulfilled' ) return "Loading...";  
+
+if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.status !== 'fulfilled' ) return "Loading...";
+
   return (
     <Box m="1.5rem 2.5rem">
     <Box role="presentation" onClick={handleClickBreadCrumbs} sx={{ mb:3 }}>
@@ -254,7 +128,7 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
        Administrador
     </Typography>
   </Breadcrumbs>
-  <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Administración de usuarios </Typography>
+  <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> administración de usuarios </Typography>
   </Box>
       <Box
         mt="10px"
@@ -267,12 +141,12 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
         }}
       >
         <Box 
-        gridColumn="span 5"
+        gridColumn="span 8"
         gridRow="span 3"
         backgroundColor={theme.palette.background.alt}
         p="1.5rem"
         borderRadius="1.5rem"
-        mt="20px"
+        mt="40px"
         height="fit-content"
         sx={{ boxShadow: 4 }}
         >
@@ -283,7 +157,7 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
           </Grid>
           <MaterialReactTable
       columns={columns}
-      data={user}
+      data={usuarios.data}
       localization={MRT_Localization_ES}
       enableRowActions 
       positionActionsColumn="last" 
@@ -295,9 +169,9 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
         gap: '0.5rem'
       }}>
           <Button variant="contained" color="success" sx={{ bgcolor:'teal', color:'white' }} onClick={() => {
-            handleOpen();
-            setDatosUsuario(row.original);
-            console.log(datosUsuario);
+            handleOpen( row.original);
+            console.info('Opciones', row.original);
+            console.info(user)
           }}>
               Opciones
             </Button>
@@ -310,10 +184,10 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-             Nombre de Usuario
+             {user.nombres}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Ocupación
+            {user.ocupacion}
           </Typography>
           <Divider sx={{ mt:3 }}>
             <Chip label="ROL DEL USUARIO" />
@@ -347,6 +221,8 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
 
 
       }
+                 
+           
               </Select>
             </FormControl>
           </Box>
@@ -381,7 +257,7 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
               value={vol}
               onChange={handleChangeVol}
               >
-                    <MenuItem value="">
+                <MenuItem value="">
                   <em>Seleccione Tipo</em>
                 </MenuItem>
               
@@ -409,9 +285,9 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
                <Button variant='contained' color='error' onClick={handleClose}> Cancelar </Button>
              </Grid>
              <Grid item>
-               <Button variant='contained' sx={{ bgcolor:'teal', color:'white' }} onClick={handleSubmit}> Aceptar </Button>
+               <Button variant='contained' sx={{ bgcolor:'teal', color:'white' }} > Aceptar </Button>
              </Grid>
-          </Grid>
+             </Grid>
         </Box>
        </Modal>
             </div>}
@@ -455,126 +331,6 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
         },
         labelRowsPerPage: 'Número de filas visibles'
       }}
-      renderDetailPanel={({ row }) => (
-        <Box
-          sx={{
-            display: 'grid',
-            margin: 'auto',
-            gridTemplateColumns: '1fr 1fr',
-            width: '100%',
-          }}
-        >
-          <Typography>Email: {row.original.email}</Typography>
-          <Typography>Ocupacion: {row.original.ocupacion}</Typography>
-          <Typography>Tipo: {row.original.tipo}</Typography>
-          <Typography>Rol: {row.original.rol}</Typography>
-        </Box>
-      )}
-      />
-        </Box>
-        <Box 
-        gridColumn="span 3"
-        gridRow="span 4"
-        backgroundColor={theme.palette.background.alt}
-        p="1.5rem"
-        borderRadius="1.5rem"
-        mt="10px"
-        height="fit-content"
-        sx={{ boxShadow: 4 }}
-        >
-          <Grid container spacing={2}>
-           <Grid item xs={10}>
-             <Typography variant='h5'> Acceso Pendiente </Typography>
-           </Grid>
-          </Grid>
-          <MaterialReactTable
-      columns={columns}
-      data={data[0]}
-      localization={MRT_Localization_ES}
-      enableRowActions 
-      positionActionsColumn="last" 
-      renderRowActions={({
-        row
-      }) => <div style={{
-        display: 'flex',
-        flexWrap: 'nowrap',
-        gap: '0.5rem'
-      }}>
-          <Tooltip title="Aceptar/Rechazar Usuario">
-          <Button variant="contained" color="success" sx={{ bgcolor:'teal', color:'white' }} onClick={() => {
-            handleOpenAM(row.original);
-          
-          }}>
-              <ManageAccountsIcon />
-            </Button>
-            </Tooltip>
-            <Modal
-        open={openAM}
-        onClose={handleCloseAM}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        slotProps={{ backdrop: { style: { opacity: 0.2 } } }}
-      >
-        <Box sx={style}>
-          <AcceptTab dato={datoVo} onClose={handleCloseAM}/>
-        </Box>
-       </Modal>
-            </div>}
-      muiTopToolbarProps={{ 
-        sx: {
-          backgroundColor: theme.palette.background.alt,
-        }, 
-       }}
-      muiTableHeadCellProps={{
-        sx: {
-          backgroundColor: theme.palette.background.alt,
-        },
-      }}
-      muiBottomToolbarProps={{ 
-        sx: {
-          backgroundColor: theme.palette.background.alt,
-        },
-       }}
-      muiTableBodyProps={{
-        sx: {
-          '& tr:nth-of-type(odd)': {
-            backgroundColor: theme.palette.background.light,
-          },
-        },
-      }}
-      muiTablePaperProps={{
-        elevation: 0, //change the mui box shadow
-        //customize paper styles
-      }}
-      initialState={{
-        pagination: {
-          pageSize: 5,
-          pageIndex: 0
-        }
-      }} muiTablePaginationProps={{
-        rowsPerPageOptions: [5, 10, 20, 30, 50, 100],
-        showFirstButton: false,
-        showLastButton: false,
-        SelectProps: {
-          native: true
-        },
-        labelRowsPerPage: 'Número de filas visibles'
-      }}
-      renderDetailPanel={({ row }) => (
-        <Box
-          sx={{
-            display: 'grid',
-            margin: 'auto',
-            gridTemplateColumns: '1fr 1fr',
-            width: '100%',
-          }}
-        >
-          <Typography>Cedula: {row.original.cedula}</Typography>
-          <Typography>Telefono: {row.original.telefono}</Typography>
-          <Typography>Email: {row.original.email}</Typography>
-          <Typography>Ocupacion: {row.original.descripcion}</Typography>
-        </Box>
-      )}
       />
         </Box>
       </Box>

@@ -17,6 +17,13 @@ export const api = createApi({
     "Categorias",
     "Procat",
     "Usuarios",
+    "Usuariostecnicos",
+    "Roles",
+    "Tipos",
+    "Voluntarios",
+    "Socios",
+    "Sector",
+    "Proyectos"
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -75,6 +82,34 @@ export const api = createApi({
       query: () => "api/usuarios",
       providesTags: ["Usuarios"],
     }),
+    getUsuariosTecnicos: build.query({
+      query: () => "api/usuariostecnicos",
+      providesTags: ["UsuariosTecnicos"],
+    }),
+    getRoles: build.query({
+      query: () => "api/rol",
+      providesTags: ["Roles"],
+    }),
+    getTipos: build.query({
+      query: () => "api/tipo",
+      providesTags: ["Tipos"],
+    }),
+    getVoluntarios: build.query({
+      query: () => "api/voluntarios",
+      providesTags: ["Voluntarios"],
+    }),
+    getSocios: build.query({
+      query: () => "api/socios",
+      providesTags: ["Socios"],
+    }),
+    getSector: build.query({
+      query: () => "api/sector",
+      providesTags: ["Sector"],
+    }),
+    getProyecto: build.query({
+      query: () => "api/proyectos",
+      providesTags: ["Proyectos"],
+    }),
   }),
 });
 
@@ -92,4 +127,11 @@ export const {
    useGetCategoriasQuery,
    useGetProcatQuery,
    useGetUsuariosQuery,
+   useGetRolesQuery,
+   useGetTiposQuery,
+   useGetVoluntariosQuery,
+   useGetSociosQuery,
+   useGetSectorQuery,
+   useGetUsuariosTecnicosQuery,
+   useGetProyectoQuery,
 } = api;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -31,13 +30,11 @@ import ProjectsReport from 'components/ProjectsReport';
 
 function GestionProyectos() {
 
- const nav = useNavigate();
+//Theme
+const theme = useTheme();
 
- //Theme
- const theme = useTheme();
-
- //Modal Styles
- const style = {
+//Modal Styles
+const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -56,19 +53,6 @@ function GestionProyectos() {
         event.preventDefault();
         console.info('You clicked a breadcrumb.');
     }
-
-  //Routes
-  const handleLinkHome = (event, message) => {
-  if (message === 'home') {
-    nav("/inicio")
-   }
- };
-
- const handleLinkProjects = (event, message) => {
-  if (message === 'proyectos') {
-    nav("/proyectos")
-  }
- };
 
     //Select
     const [proyecto, setProyecto] = React.useState('');
@@ -101,7 +85,6 @@ function GestionProyectos() {
       sx={{ display:'flex', alignItems:'center' }}
       color="inherit"
       href="/inicio"
-      onClick={event => handleLinkHome(event, 'home')}
     >
       <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
       Inicio
@@ -111,7 +94,6 @@ function GestionProyectos() {
       sx={{ display:'flex', alignItems:'center' }}
       color="inherit"
       href="/proyectos"
-      onClick={event => handleLinkProjects(event, 'proyectos')}
     >
       <CasesRoundedIcon sx={{ mr: 0.5 }} fontSize="inherit" />
       Proyectos
