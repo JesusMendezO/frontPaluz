@@ -51,7 +51,7 @@ function App() {
               <Route path="/adminEquipos" element={<AdminEquipos />} />
               <Route path="/gestionProyectos" element={<GestionProyectos />} />
               <Route path="/estadisticas" element={<Estadisticas />} />
-              <Route path="/crearActividad" element={<CrearActividad />} />
+              <Route path="/crearConvocatoria" element={<CrearActividad />} />
               <Route path="/aceptarUsuarios" element={<AceptarUsuarios />} />
               <Route path="/cargar-datos" element={<Upload />} />
             </Route>
