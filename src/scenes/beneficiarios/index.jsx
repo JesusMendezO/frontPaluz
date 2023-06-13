@@ -63,7 +63,7 @@ const Beneficiarios = () => {
        <Card sx={{ borderRadius:8, boxShadow:5, bgcolor:theme.palette.background.alt }}>
         <CardContent>
             <Grid container justifyContent="center" mt={3}>
-                <Grid item xs={2}>
+                <Grid item xs={7} sm={2}>
                   <Box 
                    component="img"
                    alt="logo"
@@ -75,17 +75,17 @@ const Beneficiarios = () => {
                 </Grid>
             </Grid>
             <Grid container justifyContent="center" mt={3}>
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={8}>
                   <Typography className='text-center'> Ingrese la cédula de identidad del beneficiario. </Typography>
                 </Grid>
             </Grid>
             <Grid container justifyContent="center" mt={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <TextField id="BenSearch" label="Buscar Beneficiarios" fullWidth/>                
                 </Grid>
             </Grid>
             <Grid container justifyContent="center" mt={3} mb={2}>
-                <Grid item xs={3}>
+                <Grid item xs={6} sm={3}>
                    <Button variant='contained' color='success' size='large' fullWidth> Buscar </Button>          
                 </Grid>
             </Grid>
