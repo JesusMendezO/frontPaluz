@@ -19,7 +19,7 @@ import { IMaskInput } from 'react-imask';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import 'dayjs/locale/es';
 import logo from 'assets/paluz-logo.png';
 import clienteAxios from '../../config/clienteAxios';
@@ -141,6 +141,9 @@ export default function Registro() {
     textmask: '',
   });
 
+  //DatePicker Value
+  const [value, setValue] = React.useState(null);
+
   const handleChangeTel = (event) => {
     setValues({
       ...values,
@@ -253,24 +256,39 @@ export default function Registro() {
                  />
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/*<Grid item xs={12} sm={6}>
                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">  
-                    {/*<DateField label="Fecha de Nacimiento" name="fnac" format="DD-MM-YYYY" required fullWidth />*/}
                     <DatePicker 
                        id="fnac"
                        name="fnac"
                        label="Fecha/Nacimiento"
                        format="DD-MM-YYYY"
                        clearable
-          disableFuture
-          value={selectedDate}
-          onChange={handleDateChange}
+                       disableFuture
+                      value={selectedDate}
+                       onChange={handleDateChange}
                       //  onChange={(date) => {
                       //   setDate(new Date(date).toLocaleDateString('es-ES'));
                    
                       // }}
                        sx={{ width: '100%', bgcolor:'white' }}
                       />
+                 </LocalizationProvider>
+               </Grid>*/}
+               <Grid item xs={12} sm={6}>
+                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">  
+                    {/*<DateField label="Fecha de Nacimiento" name="fnac" format="DD-MM-YYYY" required fullWidth />*/}
+                    <DesktopDatePicker
+                    label="Fecha/Nacimiento"
+                    name="fnac"
+                    inputFormat="DD/MM/YYYY" 
+                    value={value}
+                    onChange={setValue}
+                    renderInput={(params) => {
+                     return <TextField fullWidth {...params} />;
+                    }}
+                    clearable
+                    />
                  </LocalizationProvider>
               </Grid>
               <Grid item xs={12} sm={6}>
