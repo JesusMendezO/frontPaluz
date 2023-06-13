@@ -12,6 +12,7 @@ import Registro from "scenes/register";
 import ResetPass from "scenes/resetPass";
 import Dashboard from "scenes/dashboard";
 import Proyectos from "scenes/proyectos";
+import Beneficiarios from "scenes/beneficiarios";
 import Voluntariado from "scenes/voluntariado";
 import Logistica from "scenes/logistica";
 import Suministros from "scenes/suministros";
@@ -42,6 +43,7 @@ function App() {
               {/*<Route path="/" element={<Navigate to="/inicio" replace />} />*/}
               <Route path="/inicio" element={<Dashboard />} />
               <Route path="/proyectos" element={<Proyectos />} />
+              <Route path="/beneficiarios" element={<Beneficiarios />} />
               <Route path="/gestionhumana" element={<GestionHumana />} />
               <Route path="/voluntariado" element={<Voluntariado />} />
               <Route path="/logistica" element={<Logistica />} />
