@@ -12,25 +12,31 @@ body,
   height: 100%;
   width: 100%;
   font-family: 'Comfortaa', cursive;
+  overflow: overlay;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  display: block;
+  width: 8px;
 }
 
-/* Track */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
 ::-webkit-scrollbar-track {
-  background: #7a7f9d;
+  background-color: #00000000;
+  margin-top: 68px;
 }
 
-/* Handle */
+::-webkit-scrollbar-track-piece {
+  background-color: #00000000;
+}
+
 ::-webkit-scrollbar-thumb {
-  background: #21295c;
-}
-
-/* Handle on Hover */
-::-webkit-scrollbar-track:hover {
-  background: #21295c;
+  background-color: #00000040;
+  border: 1px solid #ffffff40;
+  border-radius: 24px;
 }
 
 input[type="number"] {
@@ -89,8 +95,7 @@ input[type="number"]::-webkit-outer-spin-button {
     background-image: url('assets/paluz-bg-1.png');
     background-size: cover;
     background-repeat: no-repeat ;
-  }
-  
+  }  
 }
 
 .zoom {
@@ -99,5 +104,33 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .zoom:hover {
   transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+@media screen and (orientation: portrait) {
+  #rotate-view {
+    display: none;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  #rotate-view {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  #vertical-view {
+    display: none;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  #vertical-view {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
 }
 
