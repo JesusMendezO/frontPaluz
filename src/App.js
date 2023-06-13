@@ -21,6 +21,7 @@ import Upload from "scenes/cargar-datos";
 import CrearProyecto from "scenes/proyectos/crearProyecto";
 import AdminEquipos from "scenes/proyectos/adminEquipos";
 import GestionProyectos from "scenes/proyectos/gestionProyectos";
+import Estadisticas from "scenes/proyectos/estadisticas";
 import CrearActividad from "scenes/voluntariado/crearActividad";
 import AceptarUsuarios from "scenes/admin/aceptarUsuarios";
 import CreatePass from "scenes/createPass";
@@ -49,6 +50,7 @@ function App() {
               <Route path="/crearProyecto" element={<CrearProyecto />} />
               <Route path="/adminEquipos" element={<AdminEquipos />} />
               <Route path="/gestionProyectos" element={<GestionProyectos />} />
+              <Route path="/estadisticas" element={<Estadisticas />} />
               <Route path="/crearActividad" element={<CrearActividad />} />
               <Route path="/aceptarUsuarios" element={<AceptarUsuarios />} />
               <Route path="/cargar-datos" element={<Upload />} />

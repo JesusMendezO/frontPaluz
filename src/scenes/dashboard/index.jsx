@@ -1,7 +1,5 @@
 import React from "react";
-import { useState,useEffect } from 'react';
 import FlexBetween from "components/FlexBetween";
-import Header from "components/Header";
 import {
   Diversity1Outlined,
   PregnantWomanOutlined,
@@ -16,7 +14,7 @@ import {
 } from "@mui/material";
 import BreakdownChart from "components/BreakdownChart";
 import Carousel from "components/Carousel";
-import { MyCalendar } from "components/MyCalendar";
+import DashBoardCalendar from "components/Scheduler/dashBoardCalendar";
 import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
 
@@ -24,23 +22,11 @@ const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data } = useGetDashboardQuery();
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const items = JSON.parse(localStorage.getItem('token'));
-    if (items) {
-     setItems(items);
-    }
-  }, []);
-  
-
-
-
 
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-        <Typography variant="h2" sx={{ fontWeight:'bold', mt:2 }} > Bienvenido, {items.nombre} </Typography>
+        <Typography variant="h2"> Bienvenido, Usuario  </Typography>
       </FlexBetween>
 
       <Box
@@ -81,7 +67,9 @@ const Dashboard = () => {
           gridRow="span 2"
           backgroundColor={theme.palette.background.alt}
           p="1rem"
-          borderRadius="0.55rem"
+          borderRadius="1.5rem"
+          boxShadow={5}
+          width='fit-content'
         >
           <Carousel />
           {/*<OverviewChart view="sales" isDashboard={true} />*/}
@@ -115,18 +103,20 @@ const Dashboard = () => {
           gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
           p="1.5rem"
-          borderRadius="0.55rem"
+          borderRadius="1.5rem"
+          height="fit-content"
+          boxShadow={5}
         >
-          {/* <Calendar /> */}
-          <MyCalendar />
-
+          <DashBoardCalendar/>
         </Box>
         <Box
           gridColumn="span 4"
           gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
           p="1.5rem"
-          borderRadius="0.55rem"
+          borderRadius="1.5rem"
+          height={505}
+          boxShadow={5}
         >
           <Typography variant="h6" sx={{ color: theme.palette.secondary[100] }}>
            Progreso del Proyecto

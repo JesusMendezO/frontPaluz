@@ -67,18 +67,6 @@ const appoinmentFormLocalizationMessages = {
     onLabel: 'A la(s)',
     occurrencesLabel: 'Ocurrencia(s)',
     afterLabel: 'Luego de',
-    weeksOnLabel: 'Semana(s) en',
-    monthsLabel: 'Mes(es)',
-    ofEveryMonthLabel: 'de cada mes',
-    theLabel: 'El',
-    firstLabel: 'Primer',
-    secondLabel: 'Segundo',
-    thirdLabel: 'Tercer',
-    fourthLabel: 'Cuarto',
-    lastLabel: 'Último',
-    yearsLabel: 'Año(s)',
-    ofLabel: '',
-    everyLabel:'Siempre en'
   },
 };
 const getAppoinmentFormMessages = locale => appoinmentFormLocalizationMessages[locale];
@@ -107,7 +95,7 @@ const editRecurrenceLocalizationMessages = {
 };
 const getEditRecurrenceMessages = locale => editRecurrenceLocalizationMessages[locale];
 
-export default class Calendar extends React.PureComponent {
+export default class DashBoardCalendar extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -173,7 +161,7 @@ export default class Calendar extends React.PureComponent {
     return (
         <Scheduler
           data={data}
-          height={'475'}
+          height={'460'}
           locale={locale}
         >
           <ViewState
@@ -221,7 +209,7 @@ export default class Calendar extends React.PureComponent {
             showCloseButton
           />
           <DragDropProvider />
-          <AppointmentForm  messages={getAppoinmentFormMessages(locale)}/>
+          <AppointmentForm  messages={getAppoinmentFormMessages(locale)} readOnly/>
         </Scheduler>
     );
   }
