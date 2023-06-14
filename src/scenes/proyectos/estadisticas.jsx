@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import  { useNavigate, useLocation } from 'react-router-dom';
 import { Box, useTheme, useMediaQuery, FormControl, MenuItem, InputLabel, Select} from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -12,7 +12,11 @@ import StatChart from 'components/StatChart';
 import PieChart from 'components/PieChart';
 
 const Estadisticas = () => {
-
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const token =params.get("prop");
+  const proyect = JSON.parse(token) 
+  console.log(proyect);
   //Theme
   const theme = useTheme();
 
@@ -75,7 +79,7 @@ const [views, setViews] = useState("pie1");
       Estadísticas
     </Typography>
   </Breadcrumbs>
-      <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Estadísticas para: [Proyecto] </Typography>
+      <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Estadísticas para: {proyect.nombre} </Typography>
       </Box>
       <Box
         mt="40px"

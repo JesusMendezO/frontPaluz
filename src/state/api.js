@@ -51,7 +51,7 @@ export const api = createApi({
       providesTags: ["Geography"],
     }),
     getSales: build.query({
-      query: () => "sales/sales",
+      query: () => "api/semanas",
       providesTags: ["Sales"],
     }),
     getAdmins: build.query({

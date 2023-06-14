@@ -26,6 +26,7 @@ import Estadisticas from "scenes/proyectos/estadisticas";
 import CrearActividad from "scenes/voluntariado/crearActividad";
 import AceptarUsuarios from "scenes/admin/aceptarUsuarios";
 import CreatePass from "scenes/createPass";
+import Overview from "scenes/overview";
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
@@ -56,6 +57,7 @@ function App() {
               <Route path="/crearConvocatoria" element={<CrearActividad />} />
               <Route path="/aceptarUsuarios" element={<AceptarUsuarios />} />
               <Route path="/cargar-datos" element={<Upload />} />
+              <Route path="/overview" element={<Overview />} />
             </Route>
           </Routes>
         </ThemeProvider>

@@ -10,37 +10,60 @@ const OverviewChart = ({ isDashboard = false, view }) => {
   const [totalSalesLine, totalUnitsLine] = useMemo(() => {
     if (!data) return [];
 
-    const { monthlyData } = data;
+    const  monthlyData  = data.total[0];
+    let keys = []
+    keys = Object.keys(monthlyData)
+    let value = []
+    value = Object.values(monthlyData)
+    let container = [];
+    let semanas = [];
+    const usersByLikes = ()=>{
+      for (let i = 0; i < Object.keys(monthlyData).length; i++) {
+       
+        let vacio={}
+  let j=i+2;
+        vacio.x = keys[i];
+        vacio.y = Number(value[i]);
+    
+      container=vacio;
+        
+      semanas=semanas.concat(container)
+      }
+  
+    }  
+    usersByLikes();
+    let graf=semanas.slice(1,Object.keys(monthlyData).length);
+    console.log(semanas.slice(1,Object.keys(monthlyData).length))
     const totalSalesLine = {
       id: "totalSales",
       color: theme.palette.secondary.main,
-      data: [],
+      data: graf,
     };
     
     const totalUnitsLine = {
       id: "totalUnits",
       color: theme.palette.secondary[600],
-      data: [],
+      data: graf,
     };
 
-    Object.values(monthlyData).reduce(
-      (acc, { month, totalSales, totalUnits }) => {
-        const curSales = acc.sales + totalSales;
-        const curUnits = acc.units + totalUnits;
+    // Object.values(monthlyData).reduce(
+    //   (acc, { month, totalSales, totalUnits }) => {
+    //     const curSales = acc.sales + totalSales;
+    //     const curUnits = acc.units + totalUnits;
 
-        totalSalesLine.data = [
-          ...totalSalesLine.data,
-          { x: month, y: curSales },
-        ];
-        totalUnitsLine.data = [
-          ...totalUnitsLine.data,
-          { x: month, y: curUnits },
-        ];
+    //     totalSalesLine.data = [
+    //       ...totalSalesLine.data,
+    //       { x: month, y: curSales },
+    //     ];
+    //     totalUnitsLine.data = [
+    //       ...totalUnitsLine.data,
+    //       { x: month, y: curUnits },
+    //     ];
 
-        return { sales: curSales, units: curUnits };
-      },
-      { sales: 0, units: 0 }
-    );
+    //     return { sales: curSales, units: curUnits };
+    //   },
+    //   { sales: 0, units: 0 }
+    // );
 
     return [[totalSalesLine], [totalUnitsLine]];
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -49,7 +72,7 @@ const OverviewChart = ({ isDashboard = false, view }) => {
 
   return (
     <ResponsiveLine
-      data={view === "sales" ? totalSalesLine : totalUnitsLine}
+      data={view === "Menores de Cinco" ? totalSalesLine : totalUnitsLine}
       theme={{
         axis: {
           domain: {
@@ -83,7 +106,7 @@ const OverviewChart = ({ isDashboard = false, view }) => {
           },
         },
       }}
-      margin={{ top: 20, right: 50, bottom: 50, left: 70 }}
+      margin={{ top: 20, right: 50, bottom: 100, left: 70 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -105,9 +128,9 @@ const OverviewChart = ({ isDashboard = false, view }) => {
         orient: "bottom",
         tickSize: 5,
         tickPadding: 5,
-        tickRotation: 0,
+        tickRotation: 90,
         legend: isDashboard ? "" : "Month",
-        legendOffset: 36,
+        legendOffset: 80,
         legendPosition: "middle",
       }}
       axisLeft={{
@@ -118,13 +141,13 @@ const OverviewChart = ({ isDashboard = false, view }) => {
         tickRotation: 0,
         legend: isDashboard
           ? ""
-          : `Total ${view === "sales" ? "Revenue" : "Units"} for Year`,
+          : `Niños ${view === "Menores de Cinco" ? "Menores de Cinco" : "Mel"} atendidos`,
         legendOffset: -60,
         legendPosition: "middle",
       }}
       enableGridX={false}
       enableGridY={false}
-      colors={{ scheme: 'set1' }}
+      colors={{scheme:'set1'}}
       pointSize={10}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
