@@ -30,9 +30,12 @@ const Admin = () => {
   //Theme
   const theme = useTheme();
   let voluntarios = useGetVoluntariosQuery();
-  let usuarios= useGetUsuariosQuery();
-  let tipos = useGetTiposQuery();
-  let roles = useGetRolesQuery();
+  let usuarios ;
+   usuarios= useGetUsuariosQuery();
+let tipos;
+   tipos = useGetTiposQuery();
+  let roles;
+   roles = useGetRolesQuery();
 
   const voluntariosO = async ()=> {
     
@@ -141,7 +144,7 @@ const handleSubmit = async ()=>{
     }
 }
 //console.log(data);
-console.log(user);
+console.log(voluntariosO);
   //BreadCrumbs
   function handleClickBreadCrumbs(event) {
   event.preventDefault();
@@ -232,7 +235,7 @@ setdatoVo(dato)
 );
 
 
-if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.status !== 'fulfilled' ) return "Loading...";  
+if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) return "Loading...";  
   return (
     <Box m="1.5rem 2.5rem">
     <Box role="presentation" onClick={handleClickBreadCrumbs} sx={{ mb:3 }}>
@@ -281,7 +284,7 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
              <Typography variant='h5'> Listado de Usuarios </Typography>
            </Grid>
           </Grid>
-          <MaterialReactTable
+    <MaterialReactTable
       columns={columns}
       data={user}
       localization={MRT_Localization_ES}
@@ -297,7 +300,7 @@ if (usuarios.status !== 'fulfilled' || roles.status !== 'fulfilled' || tipos.sta
           <Button variant="contained" color="success" sx={{ bgcolor:'teal', color:'white' }} onClick={() => {
             handleOpen();
             setDatosUsuario(row.original);
-            console.log(datosUsuario);
+         
           }}>
               Opciones
             </Button>
