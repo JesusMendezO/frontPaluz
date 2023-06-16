@@ -34,7 +34,7 @@ const Dashboard = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
-      <Typography variant="h2" sx={{ fontWeight:'bold', mt:2 }} > Bienvenido, {items.nombre} </Typography>
+         <Typography variant="h2" sx={{ fontWeight:'bold', mt:2 }} > Bienvenido, {items.nombre} </Typography>
       </FlexBetween>
 
       <Box

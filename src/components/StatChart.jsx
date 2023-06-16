@@ -1,11 +1,73 @@
 import React, { useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
-
+import { useGetSemanasQuery } from "state/api";
 const StatChart = ({view}) => {
     //Theme
     const theme = useTheme();
+    const { data, isLoading } = useGetSemanasQuery();
 
+    const [totalSalesLine, totalUnitsLine] = useMemo(() => {
+      if (!data) return [];
+  
+      const  monthlyData  = data.total[0];
+      let keys = []
+      keys = Object.keys(monthlyData)
+      let value = []
+      value = Object.values(monthlyData)
+      let container = [];
+      let semanas = [];
+      const usersByLikes = ()=>{
+        for (let i = 0; i < Object.keys(monthlyData).length; i++) {
+         
+          let vacio={}
+    let j=i+2;
+          vacio.x = keys[i];
+          vacio.y = Number(value[i]);
+      
+        container=vacio;
+          
+        semanas=semanas.concat(container)
+        }
+    
+      }  
+      usersByLikes();
+      let graf=semanas.slice(1,Object.keys(monthlyData).length);
+      console.log(semanas.slice(1,Object.keys(monthlyData).length))
+      const totalSalesLine = {
+        id: "totalSales",
+        color: theme.palette.secondary.main,
+        data: graf,
+      };
+      
+      const totalUnitsLine = {
+        id: "totalUnits",
+        color: theme.palette.secondary[600],
+        data: graf,
+      };
+  
+      // Object.values(monthlyData).reduce(
+      //   (acc, { month, totalSales, totalUnits }) => {
+      //     const curSales = acc.sales + totalSales;
+      //     const curUnits = acc.units + totalUnits;
+  
+      //     totalSalesLine.data = [
+      //       ...totalSalesLine.data,
+      //       { x: month, y: curSales },
+      //     ];
+      //     totalUnitsLine.data = [
+      //       ...totalUnitsLine.data,
+      //       { x: month, y: curUnits },
+      //     ];
+  
+      //     return { sales: curSales, units: curUnits };
+      //   },
+      //   { sales: 0, units: 0 }
+      // );
+  
+      return [[totalSalesLine], [totalUnitsLine]];
+    }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+  
     const data1 = [
         {
           "id": "japan",
@@ -553,7 +615,7 @@ const StatChart = ({view}) => {
       ]
   return (
     <ResponsiveLine
-        data={view === "sales" ? data1 : data2}
+        data={view === "sales" ? totalSalesLine : totalUnitsLine}
         theme={{
           axis: {
             domain: {

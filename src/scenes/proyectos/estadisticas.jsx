@@ -118,7 +118,7 @@ const [views, setViews] = useState("pie1");
             label="Vistas"
             onChange={(e) => setView(e.target.value)}
           >
-            <MenuItem value="sales"> Gráfico 1 </MenuItem>
+            <MenuItem value="sales"> Gráfico 3</MenuItem>
             <MenuItem value="units"> Gráfico 2 </MenuItem>
           </Select>
         </FormControl>
@@ -141,8 +141,11 @@ const [views, setViews] = useState("pie1");
             label="Vistas"
             onChange={(e) => setViews(e.target.value)}
           >
-            <MenuItem value="pie1"> Gráfico 1 </MenuItem>
-            <MenuItem value="pie2"> Gráfico 2 </MenuItem>
+            <MenuItem value="total"> Niños y Niñas </MenuItem>
+            <MenuItem value="niños"> Niños </MenuItem>
+            <MenuItem value="niñas">Niñas </MenuItem>
+            <MenuItem value="mel"> mel </MenuItem>
+            <MenuItem value="desparacitados"> Desparasitados </MenuItem>
           </Select>
         </FormControl>
         <PieChart views={views} />
