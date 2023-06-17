@@ -36,6 +36,7 @@
     "material-react-table": "^1.10.0",
     "material-ui-dropzone": "^3.5.0",
     "mdb-react-ui-kit": "^5.1.0",
+    "minisearch": "^6.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.8.0",
