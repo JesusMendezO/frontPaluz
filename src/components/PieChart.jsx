@@ -1,9 +1,14 @@
 import React, { useMemo } from "react";
 import { ResponsivePie } from '@nivo/pie';
 import { useTheme } from "@mui/material";
-
+import { useGetSalesQuery,useGetTotalQuery,useGetNinosQuery } from "state/api";
 const PieChart = ({ views }) => {
+  const { data, isLoading } = useGetNinosQuery();
+  let data1  = 0;
+  data1  = useGetTotalQuery();
   
+  
+  console.log(data1);
     //Theme
     const theme = useTheme();
 
@@ -72,9 +77,26 @@ const PieChart = ({ views }) => {
           "color": "hsl(66, 70%, 50%)"
         }
       ]
+      const colors = [
+        theme.palette.secondary[500],
+        theme.palette.secondary[300],
+        theme.palette.secondary[400],
+        theme.palette.secondary[200],
+        theme.palette.secondary[600],
+        theme.palette.secondary[800],
+        theme.palette.secondary[700]
+      ];
+      const formattedData = Object.entries(data).map(
+        ([category, sales], i) => ({
+          id: category,
+          label: category,
+          value: sales,
+          color: colors[i],
+        })
+      );
   return (
     <ResponsivePie
-    data={views === "pie1" ? dataPie1 : dataPie2}
+    data={views === "total" ? formattedData: dataPie2}
     theme={{
         axis: {
           domain: {

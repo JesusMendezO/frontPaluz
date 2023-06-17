@@ -81,9 +81,10 @@ const handleLinkAct = (event, message) => {
   }
 };
 
-const handleLinkEst = (event, message) => {
+const handleLinkEst = (event, message,row) => {
+ let  pro = JSON.stringify(row.original);
   if (message === 'est') {
-    nav("/estadisticas")
+    nav(`/estadisticas?prop=${pro}`)
   }
 };
 
@@ -401,7 +402,7 @@ if (!proyectos.isSuccess ) return "Loading...";
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={event => handleLinkEst(event, 'est')}> <LeaderboardRoundedIcon sx={{ mr:1 }} /> Estadísticas </MenuItem>
+        <MenuItem onClick={event => handleLinkEst(event, 'est',row)}> <LeaderboardRoundedIcon sx={{ mr:1 }} /> Estadísticas </MenuItem>
         <MenuItem onClick={handleCloseDropDown}> <CloseIcon sx={{ mr:1 }} />  Desactivar Proyecto </MenuItem>
       </Menu>
 
