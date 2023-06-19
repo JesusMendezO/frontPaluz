@@ -1,102 +1,57 @@
 import React, { useMemo } from "react";
 import { ResponsivePie } from '@nivo/pie';
 import { useTheme } from "@mui/material";
-import { useGetSalesQuery,useGetTotalQuery,useGetNinosQuery } from "state/api";
+import { useGetSalesQuery,useGetTotalQuery,useGetNinosQuery,useGetTotalesQuery,useGetNinasQuery } from "state/api";
 const PieChart = ({ views }) => {
-  const { data, isLoading } = useGetNinosQuery();
-  let data1  = 0;
-  data1  = useGetTotalQuery();
   
-  
-  console.log(data1);
+  const { data, isLoading } =useGetTotalesQuery();
+  let ninos = 0;
+  ninos  = useGetNinosQuery();
+  let ninas = 0;
+  ninas  = useGetNinasQuery();
+  var mostrar;
+  console.log(data);
+
     //Theme
     const theme = useTheme();
 
-    const dataPie1 = [
-        {
-          "id": "scala",
-          "label": "scala",
-          "value": 122,
-          "color": "hsl(45, 70%, 50%)"
-        },
-        {
-          "id": "ruby",
-          "label": "ruby",
-          "value": 242,
-          "color": "hsl(37, 70%, 50%)"
-        },
-        {
-          "id": "css",
-          "label": "css",
-          "value": 365,
-          "color": "hsl(305, 70%, 50%)"
-        },
-        {
-          "id": "python",
-          "label": "python",
-          "value": 189,
-          "color": "hsl(282, 70%, 50%)"
-        },
-        {
-          "id": "rust",
-          "label": "rust",
-          "value": 537,
-          "color": "hsl(206, 70%, 50%)"
-        }
-      ]
+      if (!data || isLoading ||!ninos.isSuccess || !ninas.isSuccess
+        ) return "Cargando...";
 
-      const dataPie2 = [
-        {
-          "id": "hack",
-          "label": "hack",
-          "value": 504,
-          "color": "hsl(114, 70%, 50%)"
-        },
-        {
-          "id": "python",
-          "label": "python",
-          "value": 285,
-          "color": "hsl(235, 70%, 50%)"
-        },
-        {
-          "id": "lisp",
-          "label": "lisp",
-          "value": 542,
-          "color": "hsl(291, 70%, 50%)"
-        },
-        {
-          "id": "css",
-          "label": "css",
-          "value": 58,
-          "color": "hsl(116, 70%, 50%)"
-        },
-        {
-          "id": "php",
-          "label": "php",
-          "value": 162,
-          "color": "hsl(66, 70%, 50%)"
-        }
-      ]
-      const colors = [
-        theme.palette.secondary[500],
-        theme.palette.secondary[300],
-        theme.palette.secondary[400],
-        theme.palette.secondary[200],
-        theme.palette.secondary[600],
-        theme.palette.secondary[800],
-        theme.palette.secondary[700]
-      ];
-      const formattedData = Object.entries(data).map(
-        ([category, sales], i) => ({
-          id: category,
-          label: category,
-          value: sales,
-          color: colors[i],
-        })
-      );
+  const dataTotales = Object.entries(data).map(
+    ([category, sales], i) => ({
+      id: category,
+      label: category,
+      value: sales
+    })
+  );
+  const dataNinos = Object.entries(ninos.data).map(
+    ([category, sales], i) => ({
+      id: category,
+      label: category,
+      value: sales
+    })
+  );
+  const dataNinas = Object.entries(ninas.data).map(
+    ([category, sales], i) => ({
+      id: category,
+      label: category,
+      value: sales
+    })
+  );
+  if(views === "total" ){
+    mostrar=dataTotales;
+  }
+  if(views === "niños" ){
+    mostrar=dataNinos;
+  }
+  if(views === "niñas" ){
+    mostrar=dataNinas;
+  }
+  console.log(mostrar)
   return (
     <ResponsivePie
-    data={views === "total" ? formattedData: dataPie2}
+    data={mostrar ? mostrar: dataTotales}
     theme={{
         axis: {
           domain: {

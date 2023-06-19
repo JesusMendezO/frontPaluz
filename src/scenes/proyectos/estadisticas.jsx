@@ -122,7 +122,7 @@ const [views, setViews] = useState("pie1");
             <MenuItem value="units"> Gráfico 2 </MenuItem>
           </Select>
         </FormControl>
-           <StatChart view={view} />
+           <StatChart  />
         </Box>
         <Box 
         gridColumn="span 3"
@@ -145,7 +145,7 @@ const [views, setViews] = useState("pie1");
             <MenuItem value="niños"> Niños </MenuItem>
             <MenuItem value="niñas">Niñas </MenuItem>
             <MenuItem value="mel"> mel </MenuItem>
-            <MenuItem value="desparacitados"> Desparasitados </MenuItem>
+            <MenuItem value=""> Desparasitados </MenuItem>
           </Select>
         </FormControl>
         <PieChart views={views} />
