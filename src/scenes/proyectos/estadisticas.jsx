@@ -110,18 +110,7 @@ const [views, setViews] = useState("pie1");
         mt="10px"
         height="auto"
         sx={{ boxShadow: 4 }}
-        > 
-        <FormControl sx={{ mt:3, ml:3 }}>
-          <InputLabel> Vistas </InputLabel>
-          <Select
-            value={view}
-            label="Vistas"
-            onChange={(e) => setView(e.target.value)}
-          >
-            <MenuItem value="sales"> Gráfico 3</MenuItem>
-            <MenuItem value="units"> Gráfico 2 </MenuItem>
-          </Select>
-        </FormControl>
+        >
            <StatChart  />
         </Box>
         <Box 
