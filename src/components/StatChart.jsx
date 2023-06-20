@@ -668,7 +668,7 @@ const StatChart = () => {
             tickPadding: 5,
             tickRotation: -45,
             legend: 'Semanas',
-            legendOffset: 45,
+            legendOffset: 50,
             legendPosition: 'end'
         }}
         axisLeft={{
