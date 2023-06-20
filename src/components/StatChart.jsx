@@ -679,6 +679,7 @@ const StatChart = () => {
             legendOffset: -40,
             legendPosition: 'middle'
         }}
+        colors={{ scheme: 'dark2' }}
         pointSize={10}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={2}
