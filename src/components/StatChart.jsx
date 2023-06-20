@@ -675,7 +675,7 @@ const StatChart = () => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'count',
+            legend: 'Pacientes',
             legendOffset: -40,
             legendPosition: 'middle'
         }}
