@@ -674,7 +674,7 @@ const StatChart = () => {
         axisLeft={{
             tickSize: 5,
             tickPadding: 5,
-            tickRotation: 0,
+            tickRotation: -45,
             legend: 'count',
             legendOffset: -40,
             legendPosition: 'middle'
