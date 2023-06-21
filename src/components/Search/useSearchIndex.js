@@ -17,7 +17,7 @@ export default function useSearchIndex(
     index.addAll(data)
 console.log(index);
     setSearchIndex(index);
-  }, []);
+  }, [data]);
 
   const search = (value) => {
     console.log(value,"hola");

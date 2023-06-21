@@ -54,9 +54,9 @@ const searchIndex = new MiniSearch({
   // idField: "someOtherUniqueField",
 });
 
-searchIndex.addAll(data)
+//searchIndex.addAll(data)
 // searchIndex.add();
-// searchIndex.addAllAsync();
+ searchIndex.addAllAsync(data);
 
 let searchResults = searchIndex.search("dogge", {
   //   filter: (result) => result.tags.includes("Peanut Butter"),

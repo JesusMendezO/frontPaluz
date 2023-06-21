@@ -18,7 +18,7 @@ const miniSearchOptions = {
   fields: ["cedula", "nombre_rep", "nombre"],
   storeFields: ["cedula", "nombre_rep", "nombre"],
   searchOptions: {
-    boost: { title: 2, description: 1 },
+    boost: {cedula: 2, nombre: 1 },
     prefix: true,
     fuzzy: 0.25,
   },
@@ -30,6 +30,9 @@ export default function SearchPage() {
   const [data, setData]= React.useState([]);
   const [ejecutar, setEjecutar]= React.useState(true);
   const [inputValue, setInputValue] = useState("");
+
+
+
   const voluntariosO = async ()=> {
     
 
@@ -63,6 +66,7 @@ export default function SearchPage() {
   };
   if(ejecutar){
     voluntariosO() ;
+   
   }
   
 
@@ -72,7 +76,7 @@ export default function SearchPage() {
     miniSearchOptions,
     {}
   );
-console.log(results);
+
   return (
     <div className="flex flex-col items-center justify-start p-8 max-w-[1200px] mx-auto min-h-full">
       <Grid container justifyContent="center" mt={1}>
