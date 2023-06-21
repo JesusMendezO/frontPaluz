@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 
 export default function Result({ result }) {
+  console.log(result)
   //Theme
   const theme = useTheme();
   return (
@@ -15,8 +16,9 @@ export default function Result({ result }) {
          <Card sx={{ borderRadius:8, boxShadow:5, bgcolor:theme.palette.background.alt, border:"solid 1px"}}>
            <CardContent>
              <div className="card-body">
-               <h6 className="card-title"> <strong>{result.title}</strong> </h6>
-               <p className="mt-3">{result.description}</p>
+               <h6 className="card-title"> <strong>{result.nombre}</strong> </h6>
+               <p className="mt-3">{result.nombre_rep}</p>
+               
                <div className="card-actions justify-end">
                  <button className="btn btn-block mt-2" style={{ backgroundColor:'teal', color:'white' }}>
                     Ver más

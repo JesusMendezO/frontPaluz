@@ -25,7 +25,7 @@ const Beneficiarios = () => {
   //BreadCrumbs
   function handleClickBreadCrumbs(event) {
     event.preventDefault();
-    console.info('You clicked a breadcrumb.');
+    console.info('You clicked a breadcrumb.')
   }
 
   //Routes
@@ -57,7 +57,7 @@ const Beneficiarios = () => {
               Beneficiarios
             </Typography>
          </Breadcrumbs>
-         <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Beneficiarios </Typography>
+         <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Beneficiarios</Typography>
       </Box>
       <Container>
        <Box sx={{ bgcolor:"transparent" }}>
