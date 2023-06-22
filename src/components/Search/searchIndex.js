@@ -1,11 +1,48 @@
+import React from 'react';
 import MiniSearch from "minisearch";
 import { mockData } from "./mockData";
+import clienteAxios from '../../config/clienteAxios';
+
+
+const [data, setData]= React.useState([]);
+const voluntariosO = async ()=> {
+    
+
+   
+
+  try {
+    
+    const { data1 } = await clienteAxios.get('/beneficiarios/')
+    .then(function (response) {
+     // setAlerta({})
+     
+     setData(response.data);
+   
+     return
+    })
+    .catch(function (error) {
+    
+      
+    
+      console.log('error')
+     return
+    });
+  
+    
+    
+    
+} catch (error) {
+    return
+}
+
+};
+voluntariosO() ;
 
 const searchIndex = new MiniSearch({
   // fields to index for full-text search
-  fields: [ "cedula", "title", "description"],
+  fields: [ "cedula", "nombre_rep", "nombre"],
   // fields to return with search results
-  storeFields: [ "cedula","title", "description", "price"],
+  storeFields: [ "cedula","nombre_rep", "nombre"],
   searchOptions: {
     // Set weights of the fields in your data
     boost: { title: 2, description: 1 },
@@ -17,9 +54,9 @@ const searchIndex = new MiniSearch({
   // idField: "someOtherUniqueField",
 });
 
-searchIndex.addAll(mockData);
+//searchIndex.addAll(data)
 // searchIndex.add();
-// searchIndex.addAllAsync();
+ searchIndex.addAllAsync(data);
 
 let searchResults = searchIndex.search("dogge", {
   //   filter: (result) => result.tags.includes("Peanut Butter"),

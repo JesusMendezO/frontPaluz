@@ -11,12 +11,16 @@ import SearchIcon from '@mui/icons-material/SearchRounded';
 import icon from 'assets/paluz-icon-2.png'
 import Result from "./Result";
 import useSearchIndex from "./useSearchIndex";
+import clienteAxios from '../../config/clienteAxios';
+import { useGetSemanasQuery } from "state/api";
+
+
 
 const miniSearchOptions = {
-  fields: ["cedula", "title", "description"],
-  storeFields: ["cedula", "title", "description", "price"],
+  fields: ["cedula", "nombre_rep", "nombre"],
+  storeFields: ["cedula", "nombre_rep", "nombre"],
   searchOptions: {
-    boost: { title: 2, description: 1 },
+    boost: {cedula: 2, nombre: 1 },
     prefix: true,
     fuzzy: 0.25,
   },
@@ -25,11 +29,52 @@ const miniSearchOptions = {
 export default function SearchPage() {
   //Theme
   const theme = useTheme();
-
+  const [data, setData]= React.useState([]);
+  const [ejecutar, setEjecutar]= React.useState(true);
   const [inputValue, setInputValue] = useState("");
 
+
+
+  const voluntariosO = async ()=> {
+    
+
+   
+
+    try {
+      
+      const { data1 } = await clienteAxios.get('/beneficiarios/')
+      .then(function (response) {
+       // setAlerta({})
+       
+       setData(response.data);
+     setEjecutar(false);
+       return
+      })
+      .catch(function (error) {
+      
+        
+      
+        console.log('error')
+       return
+      });
+    
+      
+      
+      
+  } catch (error) {
+      return
+  }
+  
+  };
+  if(ejecutar){
+    voluntariosO() ;
+   
+  }
+  
+
+  console.log(data)
   const { results, search, searchIndex } = useSearchIndex(
-    mockData,
+    data,
     miniSearchOptions,
     {}
   );
@@ -50,7 +95,7 @@ export default function SearchPage() {
         </Grid>
         <Grid container justifyContent="center" mt={3}>
             <Grid item xs={12} sm={8}>
-              <Typography className='text-center'> Ingrese la cédula de identidad del beneficiario. </Typography>
+              <Typography className='text-center'> Ingrese la cédula de identidad del beneficiario </Typography>
             </Grid>
         </Grid>
         <Grid container justifyContent="center" mt={2}>

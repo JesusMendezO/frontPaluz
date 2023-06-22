@@ -2,12 +2,13 @@ import React, { useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
 import { useGetSemanasQuery } from "state/api";
-const StatChart = ({view}) => {
+const StatChart = () => {
     //Theme
     const theme = useTheme();
     const { data, isLoading } = useGetSemanasQuery();
-
+    
     const [totalSalesLine, totalUnitsLine] = useMemo(() => {
+   
       if (!data) return [];
   
       const  monthlyData  = data.total[0];
@@ -613,9 +614,10 @@ const StatChart = ({view}) => {
           ]
         }
       ]
+      if(!totalSalesLine )return "loanding"
   return (
     <ResponsiveLine
-        data={view === "sales" ? totalSalesLine : totalUnitsLine}
+        data={ totalSalesLine}
         theme={{
           axis: {
             domain: {
@@ -664,19 +666,20 @@ const StatChart = ({view}) => {
         axisBottom={{
             tickSize: 5,
             tickPadding: 5,
-            tickRotation: 0,
-            legend: 'transportation',
-            legendOffset: 36,
+            tickRotation: -45,
+            legend: 'Semanas',
+            legendOffset: 60,
             legendPosition: 'middle'
         }}
         axisLeft={{
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'count',
+            legend: 'Pacientes',
             legendOffset: -40,
             legendPosition: 'middle'
         }}
+        colors={{ scheme: 'set1' }}
         pointSize={10}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={2}

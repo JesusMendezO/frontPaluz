@@ -26,7 +26,10 @@ export const api = createApi({
     "Proyectos",
     "Semanas",
     "Total",
-    "Ninos"
+    "Ninos",
+    "Ninas",
+    "Totales",
+    "Beneficiario"
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -124,6 +127,18 @@ export const api = createApi({
     getNinos: build.query({
       query: () => "api/ninos",
       providesTags: ["Ninos"],
+    }),
+    getTotales: build.query({
+      query: () => "api/totales",
+      providesTags: ["Totales"],
+    }),
+    getNinas: build.query({
+      query: () => "api/ninas",
+      providesTags: ["Ninas"],
+    }),
+    getBeneficiario: build.query({
+      query: () => "api/beneficiario",
+      providesTags: ["Beneficiario"],
     })
   }),
 });
@@ -152,4 +167,7 @@ export const {
    useGetSemanasQuery,
    useGetTotalQuery,
   useGetNinosQuery,
+  useGetNinasQuery,
+  useGetTotalesQuery,
+  useGetBeneficiarioQuery,
 } = api;

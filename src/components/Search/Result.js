@@ -50,6 +50,7 @@ function a11yProps(index) {
 
 
 export default function Result({ result }) {
+  console.log(result)
   //Theme
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
