@@ -154,7 +154,7 @@ export default function Result({ result }) {
            <TabPanel value={value} index={1}>
              <Grid container justifyContent='center'>
                <Grid item xs={12} mt={1}>
-                 <Typography><strong>Circunferencia Brazo (CMB): </strong>{result.circunferencia}</Typography> 
+                 <Typography><strong>Circunferencia Brazo (CMB): </strong>{result.circunferencia} cm</Typography> 
                </Grid> 
                <Grid item xs={12} mt={2}>
                  <Typography><strong>Discapacidad: </strong>{result.discapacidad}</Typography> 
