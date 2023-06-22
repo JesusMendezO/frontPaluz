@@ -89,8 +89,8 @@ export default function Result({ result }) {
          <Card sx={{ borderRadius:8, boxShadow:5, bgcolor:theme.palette.background.alt, border:"solid 1px"}}>
            <CardContent>
              <div className="card-body">
-               <p className="card-title font-result"><span className="b"><img className="icon-img" alt="Nutrición" title={result.tipo === "NUT"? "Nutrición":"Salud"} src={result.tipo === "NUT"? iconNutri:iconSalud}/></span><strong>{result.nombre}</strong> </p>
-               <p className="mt-3">Fecha Evaluacion:{result.fecha_evaluacion}</p>
+               <p className="card-title font-result"><span className="b"><img className="icon-img" alt="Nutrición" title={result.tipo === "NUT"? "Nutrición":"Salud"} src={result.tipo === "NUT"? iconNutri:iconSalud}/></span><strong>{result.nombre} {result.apellido}</strong> </p>
+               <p className="mt-3"><strong>Fecha Evaluación: </strong>{result.fecha_evaluacion}</p>
                <div className="card-actions justify-end">
                  <button className="btn btn-block mt-2" style={{ backgroundColor:'teal', color:'white' }} onClick={handleOpen}>
                     Ver más
@@ -117,10 +117,10 @@ export default function Result({ result }) {
              </Tabs>
            </Box>
            <TabPanel value={value} index={0}>
-             <Typography variant="h4" className="text-center" sx={{ fontWeight:'bold', mb:2 }}><img className="icon-img-modal" alt="Nutrición" title="Nutrición" src={iconNutri}/> José Alejandro Pirela Coscorrosa </Typography>
+             <Typography variant="h4" className="text-center" sx={{ fontWeight:'bold', mb:2 }}><img className="icon-img-modal" title={result.tipo === "NUT"? "Nutrición":"Salud"} src={result.tipo === "NUT"? iconNutri:iconSalud}/> {result.nombre} {result.apellido}  </Typography>
              <Grid container justifyContent='center'>
                <Grid item xs={11} mt={2}>
-                 <Typography><strong>Nombre Representante: </strong>{result.nombre_rep}</Typography> 
+                 <Typography><strong>Nombre Representante: </strong>{result.nombre_rep} {result.apellido_rep}</Typography> 
                </Grid> 
                <Grid item xs={11} mt={1}>
                  <Typography><strong>Cédula: </strong>{result.cedula}</Typography> 

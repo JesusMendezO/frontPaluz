@@ -18,7 +18,7 @@ import { useGetSemanasQuery } from "state/api";
 
 const miniSearchOptions = {
   fields: ["cedula", "nombre_rep", "nombre"],
-  storeFields: [ "estado"," municipio"," parroquia", "centro", "comunidad", "grupo_etnico", "tipo_ingreso", "nombre_rep", "apellido_rep", "telefono_rep", "cedula", "nombre", "apellido", "sexo", "fecha_nacimiento", "fecha_evaluacion", "edad", "lactancia", "veces", "biberon", "otros_alimentos", "agua_hervida", "agua_filtrada", "agua_sintratar", "gripe_tos", "fiebre", "diarrea", "vomito", "paludismo_malaria", "discapacidad", "edema", "circunferencia", "consejeria", "albendazol", "micronutrientes", "lns_mq", "ruft", "dosis", "resultados_seguimiento", "observaciones", "clasificacion_pb","tipo"],
+  storeFields: [ "estado","municipio","parroquia", "centro", "comunidad", "grupo_etnico", "tipo_ingreso", "nombre_rep", "apellido_rep", "telefono_rep", "cedula", "nombre", "apellido", "sexo", "fecha_nacimiento", "fecha_evaluacion", "edad", "lactancia", "veces", "biberon", "otros_alimentos", "agua_hervida", "agua_filtrada", "agua_sintratar", "gripe_tos", "fiebre", "diarrea", "vomito", "paludismo_malaria", "discapacidad", "edema", "circunferencia", "consejeria", "albendazol", "micronutrientes", "lns_mq", "ruft", "dosis", "resultados_seguimiento", "observaciones", "clasificacion_pb","tipo"],
   searchOptions: {
     boost: {cedula: 2, nombre: 1 },
     prefix: true,
