@@ -6,6 +6,8 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/SearchRounded';
 import icon from 'assets/paluz-icon-2.png'
 import Result from "./Result";
 import useSearchIndex from "./useSearchIndex";
@@ -54,16 +56,18 @@ export default function SearchPage() {
         <Grid container justifyContent="center" mt={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-              type="text"
+              type="search"
               value={inputValue}
-              label="Buscar Beneficiarios..."
               fullWidth
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
+              }}
               sx={{ bgcolor:theme.palette.background.alt}}
               onChange={(e) => {
                 search(e.target.value);
                 setInputValue(e.target.value);
               }}
-              />                
+            />          
             </Grid>
           </Grid>
           <Stack  direction={{ xs: 'column', sm: 'column' }}>
