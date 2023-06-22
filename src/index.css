@@ -83,6 +83,10 @@ input[type="number"]::-webkit-outer-spin-button {
   .bg-div-2 {
     background-image: none !important;
    }
+  .font-result {
+    font-size: 15px;
+    margin-left: 5;
+  }
 }
 
 @media screen and (max-width: 900px) {
@@ -96,6 +100,10 @@ input[type="number"]::-webkit-outer-spin-button {
     background-size: cover;
     background-repeat: no-repeat ;
   }  
+  .font-result {
+    font-size: 14px;
+    margin-left: 5;
+  }
 }
 
 .zoom {
@@ -133,4 +141,21 @@ input[type="number"]::-webkit-outer-spin-button {
     padding: 10px;
   }
 }
+span.b {
+  display: inline;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+}
+
+.icon-img {
+  width: 30px;
+  height: 30px;
+}
+
+.icon-img-modal {
+  width: 40px;
+  height: 40px;
+}
+
 
