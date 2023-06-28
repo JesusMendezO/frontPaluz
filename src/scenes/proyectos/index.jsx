@@ -23,10 +23,10 @@ import MenuItem from '@mui/material/MenuItem';
 import HomeIcon from '@mui/icons-material/Home';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { useGetProyectoQuery } from "state/api";
 
 export default function Proyectos() {
-
+  let proyectos = useGetProyectoQuery();
   const nav = useNavigate();
 
   //Theme
@@ -81,21 +81,21 @@ const handleLinkAct = (event, message) => {
   }
 };
 
-const handleLinkEst = (event, message) => {
+const handleLinkEst = (event, message,row) => {
+ let  pro = JSON.stringify(row.original);
   if (message === 'est') {
-    nav("/estadisticas")
+    nav(`/estadisticas?prop=${pro}`)
   }
 };
 
-
 const columns = useMemo(() => [
   {
-    accessorKey: 'firstName',
-    header: 'First Name',
+    accessorKey: 'nombre',
+    header: 'Nombre',
   },
   {
-    accessorKey: 'middleName',
-    header: 'Middle Name',
+    accessorKey: 'descripcion',
+    header: 'Descripcion',
   },
   {
     accessorKey: 'estados',
@@ -107,7 +107,7 @@ const columns = useMemo(() => [
 
 
 
-  
+if (!proyectos.isSuccess ) return "Loading...";
   return (
     <Box m="1.5rem 2.5rem">
     <Box role="presentation" onClick={handleClickBreadCrumbs} sx={{ mb:3 }}>
@@ -259,7 +259,7 @@ const columns = useMemo(() => [
   </Grid>
   <MaterialReactTable
       columns={columns}
-      data={data}
+      data={proyectos.data}
       localization={MRT_Localization_ES}
       enableRowActions 
       positionActionsColumn="last" 
@@ -291,7 +291,7 @@ const columns = useMemo(() => [
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={event => handleLinkEst(event, 'est')}> <LeaderboardRoundedIcon sx={{ mr:1 }} /> Estadísticas </MenuItem>
+        <MenuItem onClick={event => handleLinkEst(event, 'est',row)}> <LeaderboardRoundedIcon sx={{ mr:1 }} /> Estadísticas </MenuItem>
         <MenuItem onClick={handleCloseDropDown}> <CloseIcon sx={{ mr:1 }} />  Desactivar Proyecto </MenuItem>
       </Menu>
 
@@ -351,10 +351,10 @@ const columns = useMemo(() => [
             width: '100%',
           }}
         >
-          <Typography>Address: {row.original.address}</Typography>
-          <Typography>City: {row.original.city}</Typography>
-          <Typography>State: {row.original.state}</Typography>
-          <Typography>Country: {row.original.country}</Typography>
+          <Typography><strong>Fecha Inicio: </strong> {row.original.fecha_inicio}</Typography>
+          <Typography><strong>Fecha Fin: </strong> {row.original.fecha_fin}</Typography>
+          <Typography><strong>Codigo: </strong> {row.original.codigo}</Typography>
+          <Typography><strong>Socios: </strong> {row.original.socios}</Typography>
         </Box>
       )}
     />

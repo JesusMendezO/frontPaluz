@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useNavigate,useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,7 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import logo from 'assets/paluz-logo.png';
-
+import clienteAxios from '../../config/clienteAxios';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -33,18 +34,104 @@ const theme = createTheme();
 
 export default function CreatePass() {
 
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const location = useLocation();
+  const [alerta, setAlerta] = useState('')
+  const [alertaF, setAlertaF] = useState('')
+  const params = new URLSearchParams(location.search);
+const token = params.get("token");
+console.log(token);
+  const nav = useNavigate();
 
-  const handleSubmit = (event) => {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   let text1 = password;
+  //   let text2 = confirmPassword;
+  //   let result = text1.localeCompare(text2);
+  //   console.log(result);
+  //   if (result == 0) {
+  //     setAlerta(true);
+  //     setAlertaF(false);
+  //  console.log('son iguales')
+  //  }else{
+  //   setAlerta(false);
+  //   setAlertaF(true);
+  //   console.log(' no son iguales')
+  //  }
+  //   console.log({
+  //     email: data.get('email')
+  //   });
+  // };
+
+  const handleSubmit = async (event)=>{
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    let text1 = password;
+    let text2 = confirmPassword;
+    let result = text1.localeCompare(text2);
+    console.log(result);
+    if (result == 0) {
+      setAlerta(true);
+      setAlertaF(false);
+      try {
+      
+        const { data1 } = await clienteAxios.put('/perfil/contrasena/', {
+           
+          
+           password:password,
+         token:token,
+        
+        })
+        .then(function (response) {
+         // setAlerta({})
+          //console.log(response.data.idToken)
+            //localStorage.setItem('token',JSON.stringify(response.data) )
+            //setAuth(data)
+            nav("/")
+           
+        })
+        .catch(function (error) {
+          
+          
+        
+          console.log('error')
+         // document.getElementById(":r7:").value='';
+  
+          
+          
+        });
+      
+        
+       
+        
+    } catch (error) {
+         
+    }
+   console.log('son iguales')
+   }else{
+    setAlerta(false);
+    setAlertaF(true);
+    console.log(' no son iguales')
+   }
     console.log({
       email: data.get('email')
     });
+  
+}
+
+  const handleLinkClick = (event, message) => {
+    if (message === 'inicio') {
+      nav("/")
+    }
+
+    console.log('Link clickeado');
+    console.log(event.currentTarget);
+    console.log(message);
   };
 
-  //Show Password Handlers
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -56,16 +143,22 @@ export default function CreatePass() {
   return (
     <div className='bg-img bg-div'>
       <ThemeProvider theme={theme}>
-        {/*<div style={{ position: 'relative', marginTop:5, marginRight:5 }}>
-          <Alert variant="filled" severity="success" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
-           ¡Contraseña creada exitosamente!
-          </Alert>
+        <div style={{ position: 'relative', marginTop:5, marginRight:5 }}>
+        {
+          alerta ?  <Alert variant="filled" severity="success" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
+          ¡Contraseña creada exitosamente!
+         </Alert>:''
+}
+          
         </div>
         <div style={{ position: 'relative', marginTop:5, marginRight:5 }}>
-          <Alert variant="filled" severity="error" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
-           ¡Error al crear la contraseña!
-          </Alert>
-        </div>*/}
+        {
+          alertaF ?  <Alert variant="filled" severity="error" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
+          ¡Error al crear la contraseña!
+         </Alert>:''
+}
+          
+        </div>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -94,10 +187,12 @@ export default function CreatePass() {
             </Typography>
             <TextField
               margin="normal"
+              
+              error ={ alertaF? true : false}
               required
               fullWidth
               id="password"
-              label="Contraseña"
+              label= { alertaF? "Contraseña no Coincide" : 'Contraseña'}
               name="password"
               type={showPassword ? 'text' : 'password'}
               sx={{ mt: 3, bgcolor:'white' }}
@@ -123,8 +218,9 @@ export default function CreatePass() {
               margin="normal"
               required
               fullWidth
+              error ={ alertaF? true : false}
               id="confirmPass"
-              label="Confirmar Contraseña"
+              label={ alertaF? "Contraseña no Coincide" : ' Confirmar Contraseña'}
               name="confirmPassword"
               type={showConfirmPassword ? 'text' : 'password'}
               sx={{ mt: 3, bgcolor:'white' }}

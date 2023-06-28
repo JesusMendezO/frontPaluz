@@ -22,7 +22,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import HomeIcon from '@mui/icons-material/Home';
 import CasesRoundedIcon from '@mui/icons-material/CasesRounded';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import GroupIcon from '@mui/icons-material/Group';
 
 const style = {
@@ -46,8 +45,7 @@ const AdminEquipos = () => {
         event.preventDefault();
         console.info('You clicked a breadcrumb.');
     }
-    
-    //Modal Handlers
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -283,9 +281,8 @@ const AdminEquipos = () => {
             <TextField
               required
               fullWidth
-              type='number'
               id="miembros"
-              label=" Cantidad de Miembros"
+              label="Miembros"
               name="miembros"
             />
           </Grid>
@@ -366,7 +363,6 @@ const AdminEquipos = () => {
     }}
   >
     <MenuItem onClick={handleCloseDropDown}> <EditIcon sx={{ mr:1 }} /> Editar Equipo </MenuItem>
-    <MenuItem onClick={handleCloseDropDown}> <PersonAddAltOutlinedIcon sx={{ mr:1 }} /> Añadir Miembros </MenuItem>
     <MenuItem onClick={handleCloseDropDown}> <DeleteIcon sx={{ mr:1 }} /> Eliminar Equipo </MenuItem>
   </Menu>
 

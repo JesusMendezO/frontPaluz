@@ -14,7 +14,6 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import Alert from '@mui/material/Alert';
 import PropTypes from 'prop-types';
 import { IMaskInput } from 'react-imask';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -25,6 +24,7 @@ import 'dayjs/locale/es';
 import logo from 'assets/paluz-logo.png';
 import clienteAxios from '../../config/clienteAxios';
 import { useGetProcatQuery, useGetCategoriasQuery } from "state/api";
+import Alert from '@mui/material/Alert';
 
 
 function Copyright(props) {
@@ -96,6 +96,9 @@ export default function Registro() {
           setOcup('');
           setAlertaF(false)
           setAlerta(true)
+          setTimeout(function(){
+            setAlerta(false);
+        }, 3000);
           handleDateChange(null);
       })
       .catch(function (error) {
@@ -106,8 +109,11 @@ export default function Registro() {
        // document.getElementById(":r7:").value='';
 
         
-        setAlertaF(true)
-        setAlerta(false)
+        setAlertaF(true);
+        setTimeout(function(){
+          setAlertaF(false);
+      }, 3000);
+        setAlerta(false);
       });
     
       
@@ -157,21 +163,27 @@ export default function Registro() {
     console.log(event.currentTarget);
     console.log(message);
   };
- 
+  if (!data || isLoading || !pro) return "Loading...";
   return (
     <div className='bg-img bg-div'>
       <ThemeProvider theme={theme}>
-        {/*<div style={{ position: 'relative', marginTop:5, marginRight:5 }}>
-          <Alert variant="filled" severity="success" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
-           ¡Usuario registrado exitosamente!
-          </Alert>
-        </div>*/}
-        {/*<div style={{ position: 'relative', marginTop:5, marginRight:5 }}>
-          <Alert variant="filled" severity="error" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
-           ¡Error al registrar usuario!
-          </Alert>
-        </div>*/}
-       <Container component="main" maxWidth="xs">
+      <div style={{ position: 'relative', marginTop:5, marginRight:5 }}>
+      {
+          alerta ?  <Alert variant="filled" severity="success" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
+  ¡Usuario creado exitosamente!
+</Alert> :''
+}
+{
+          alertaF ? <Alert variant="filled" severity="error" sx={{ position: 'absolute', top: 0, right: 0, zIndex:999, borderRadius:2, boxShadow:4 }}>
+
+          ¡No se pudo registrar el usuario!
+       
+       </Alert>:''
+}
+
+          
+        </div>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -244,7 +256,26 @@ export default function Registro() {
                  />
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/*<Grid item xs={12} sm={6}>
+                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">  
+                    <DatePicker 
+                       id="fnac"
+                       name="fnac"
+                       label="Fecha/Nacimiento"
+                       format="DD-MM-YYYY"
+                       clearable
+                       disableFuture
+                      value={selectedDate}
+                       onChange={handleDateChange}
+                      //  onChange={(date) => {
+                      //   setDate(new Date(date).toLocaleDateString('es-ES'));
+                   
+                      // }}
+                       sx={{ width: '100%', bgcolor:'white' }}
+                      />
+                 </LocalizationProvider>
+               </Grid>*/}
+               <Grid item xs={12} sm={6}>
                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">  
                     {/*<DateField label="Fecha de Nacimiento" name="fnac" format="DD-MM-YYYY" required fullWidth />*/}
                     <DesktopDatePicker
@@ -279,7 +310,26 @@ export default function Registro() {
                 {/* {data.map(dato => {
                 return <ListSubheader> {dato.nombre} </ListSubheader>
                  } )} */}
-            
+                 
+                 {
+        data.map((dat,index)=>(
+
+           <MenuItem value={dat.id_pro}>
+          {dat.descripcion}
+          </MenuItem>
+          
+          
+        ))
+       
+
+
+
+      }
+
+                 
+
+                
+    
               </Select>
               </FormControl>
               </Grid>
@@ -323,19 +373,7 @@ export default function Registro() {
               </Grid>
             </Grid>
           </Box>
-          {
-          alerta ?  <Alert variant="filled" severity="success">
-  ¡Usuario creado exitosamente!
-</Alert> :''
-}
-{
-          alertaF ? <Alert variant="filled" severity="error">
-
-          ¡No se pudo registrar el usuario!
-       
-       </Alert>:''
-}
-
+    
         </Box>
         <Copyright sx={{ mt: 3, mb: 3 }} />
       </Container>
