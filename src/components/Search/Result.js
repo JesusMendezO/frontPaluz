@@ -89,8 +89,8 @@ export default function Result({ result }) {
          <Card sx={{ borderRadius:8, boxShadow:5, bgcolor:theme.palette.background.alt, border:"solid 1px"}}>
            <CardContent>
              <div className="card-body">
-               <p className="card-title font-result"><span className="b"><img className="icon-img" alt="Nutrición" title="Nutrición" src={iconNutri}/></span><strong>{result.title}</strong> </p>
-               <p className="mt-3">{result.description}</p>
+               <p className="card-title font-result"><span className="b"><img className="icon-img" alt="Nutrición" title={result.tipo === "NUT"? "Nutrición":"Salud"} src={result.tipo === "NUT"? iconNutri:iconSalud}/></span><strong>{result.nombre} {result.apellido}</strong> </p>
+               <p className="mt-3"><strong>Fecha Evaluación: </strong>{result.fecha_evaluacion}</p>
                <div className="card-actions justify-end">
                  <button className="btn btn-block mt-2" style={{ backgroundColor:'teal', color:'white' }} onClick={handleOpen}>
                     Ver más
@@ -117,69 +117,69 @@ export default function Result({ result }) {
              </Tabs>
            </Box>
            <TabPanel value={value} index={0}>
-             <Typography variant="h4" className="text-center" sx={{ fontWeight:'bold', mb:2 }}><img className="icon-img-modal" alt="Nutrición" title="Nutrición" src={iconNutri}/> José Alejandro Pirela Coscorrosa </Typography>
+             <Typography variant="h4" className="text-center" sx={{ fontWeight:'bold', mb:2 }}><img className="icon-img-modal" title={result.tipo === "NUT"? "Nutrición":"Salud"} src={result.tipo === "NUT"? iconNutri:iconSalud}/> {result.nombre} {result.apellido}  </Typography>
              <Grid container justifyContent='center'>
                <Grid item xs={11} mt={2}>
-                 <Typography><strong>Nombre Representante: </strong>N/A</Typography> 
+                 <Typography><strong>Nombre Representante: </strong>{result.nombre_rep} {result.apellido_rep}</Typography> 
                </Grid> 
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Cédula: </strong>19765877</Typography> 
+                 <Typography><strong>Cédula: </strong>{result.cedula}</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Fecha de Nacimiento: </strong>16/05/1989</Typography> 
+                 <Typography><strong>Fecha de Nacimiento: </strong>{result.fecha_nacimiento}</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Edad: </strong>34</Typography> 
+                 <Typography><strong>Edad: </strong>{result.edad}</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Género: </strong>Másculino</Typography> 
+                 <Typography><strong>Género: </strong>{result.sexo}</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Grupo Étnico: </strong>N/A</Typography> 
+                 <Typography><strong>Grupo Étnico: </strong>{result.grupo_etnico}</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Municipio: </strong>Maracaibo</Typography> 
+                 <Typography><strong>Municipio: </strong>{result.municipio}</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Comunidad: </strong>Pomona</Typography> 
+                 <Typography><strong>Comunidad: </strong>{result.comunidad}</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
                  <Typography><strong>Atendido por: </strong>Dr(a). XXXX XXXX</Typography> 
                </Grid>
                <Grid item xs={11} mt={1}>
-                 <Typography><strong>Fecha de Evaluación: </strong>21/06/2023</Typography> 
+                 <Typography><strong>Fecha de Evaluación: </strong>{result.fecha_evaluacion}</Typography> 
                </Grid>
              </Grid>
            </TabPanel>
            <TabPanel value={value} index={1}>
              <Grid container justifyContent='center'>
                <Grid item xs={12} mt={1}>
-                 <Typography><strong>Circunferencia Brazo (CMB): </strong>N/A</Typography> 
+                 <Typography><strong>Circunferencia Brazo (CMB): </strong>{result.circunferencia} cm</Typography> 
                </Grid> 
                <Grid item xs={12} mt={2}>
-                 <Typography><strong>Discapacidad: </strong>No</Typography> 
+                 <Typography><strong>Discapacidad: </strong>{result.discapacidad}</Typography> 
                </Grid>
                <Grid item xs={12} mt={2}>
-                 <Typography><strong>Clasificación PB: </strong>Adecuado</Typography> 
+                 <Typography><strong>Clasificación PB: </strong>{result.clasificacion_pb}</Typography> 
                </Grid>
              </Grid>
            </TabPanel>
            <TabPanel value={value} index={2}>
              <Grid container justifyContent='center'>
                <Grid item xs={12} mt={1}>
-                 <Typography><strong>Albendazol: </strong>Si</Typography> 
+                 <Typography><strong>Albendazol: </strong>{result.albendazol}</Typography> 
                </Grid> 
                <Grid item xs={12} mt={2}>
-                 <Typography><strong>Micronutrientes: </strong>Si</Typography> 
+                 <Typography><strong>Micronutrientes: </strong>{result.micronutrientes}</Typography> 
                </Grid>
                <Grid item xs={12} mt={2}>
-                 <Typography><strong>LNS-MQ(Sobre Amarillo): </strong>Si</Typography> 
+                 <Typography><strong>LNS-MQ(Sobre Amarillo): </strong>{result.lns_mq}</Typography> 
                </Grid>
                <Grid item xs={12} mt={2}>
-                 <Typography><strong>RUTF(Sobre Rojo): </strong>Si</Typography> 
+                 <Typography><strong>RUFT(Sobre Rojo): </strong>{result.ruft}</Typography> 
                </Grid>
                <Grid item xs={12} mt={2}>
-                 <Typography><strong>Dosis: </strong>1 Sobre al Día por 30 días</Typography> 
+                 <Typography><strong>Dosis: </strong>{result.dosis}</Typography> 
                </Grid>
              </Grid>
            </TabPanel>
