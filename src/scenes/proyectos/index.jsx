@@ -23,10 +23,10 @@ import MenuItem from '@mui/material/MenuItem';
 import HomeIcon from '@mui/icons-material/Home';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CloseIcon from '@mui/icons-material/Close';
-import { useGetProyectoQuery } from "state/api";
+
 
 export default function Proyectos() {
-  let proyectos = useGetProyectoQuery();
+
   const nav = useNavigate();
 
   //Theme
@@ -81,25 +81,25 @@ const handleLinkAct = (event, message) => {
   }
 };
 
-const handleLinkEst = (event, message,row) => {
- let  pro = JSON.stringify(row.original);
+const handleLinkEst = (event, message) => {
   if (message === 'est') {
-    nav(`/estadisticas?prop=${pro}`)
+    nav("/estadisticas")
   }
 };
 
+
 const columns = useMemo(() => [
   {
-    accessorKey: 'nombre',
-    header: 'Nombre',
+    accessorKey: 'firstName',
+    header: 'First Name',
   },
   {
-    accessorKey: 'descripcion',
-    header: 'Descripcion',
+    accessorKey: 'middleName',
+    header: 'Middle Name',
   },
   {
-    accessorKey: 'estado',
-    header: 'Estado',
+    accessorKey: 'lastName',
+    header: 'Last Name',
   },
 ],
 [],
@@ -218,7 +218,7 @@ const data = [
 },
 ];
 
-if (!proyectos.isSuccess ) return "Loading...";
+  
   return (
     <Box m="1.5rem 2.5rem">
     <Box role="presentation" onClick={handleClickBreadCrumbs} sx={{ mb:3 }}>
@@ -370,7 +370,7 @@ if (!proyectos.isSuccess ) return "Loading...";
   </Grid>
   <MaterialReactTable
       columns={columns}
-      data={proyectos.data}
+      data={data}
       localization={MRT_Localization_ES}
       enableRowActions 
       positionActionsColumn="last" 
@@ -402,7 +402,7 @@ if (!proyectos.isSuccess ) return "Loading...";
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={event => handleLinkEst(event, 'est',row)}> <LeaderboardRoundedIcon sx={{ mr:1 }} /> Estadísticas </MenuItem>
+        <MenuItem onClick={event => handleLinkEst(event, 'est')}> <LeaderboardRoundedIcon sx={{ mr:1 }} /> Estadísticas </MenuItem>
         <MenuItem onClick={handleCloseDropDown}> <CloseIcon sx={{ mr:1 }} />  Desactivar Proyecto </MenuItem>
       </Menu>
 
@@ -462,10 +462,10 @@ if (!proyectos.isSuccess ) return "Loading...";
             width: '100%',
           }}
         >
-          <Typography><strong>Fecha Inicio: </strong> {row.original.fecha_inicio}</Typography>
-          <Typography><strong>Fecha Fin: </strong> {row.original.fecha_fin}</Typography>
-          <Typography><strong>Codigo: </strong> {row.original.codigo}</Typography>
-          <Typography><strong>Socios: </strong> {row.original.socios}</Typography>
+          <Typography>Address: {row.original.address}</Typography>
+          <Typography>City: {row.original.city}</Typography>
+          <Typography>State: {row.original.state}</Typography>
+          <Typography>Country: {row.original.country}</Typography>
         </Box>
       )}
     />

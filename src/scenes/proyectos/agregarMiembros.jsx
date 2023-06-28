@@ -12,7 +12,6 @@ import Modal from '@mui/material/Modal';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Container from '@mui/material/Container';
@@ -22,7 +21,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import HomeIcon from '@mui/icons-material/Home';
 import CasesRoundedIcon from '@mui/icons-material/CasesRounded';
-import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import GroupIcon from '@mui/icons-material/Group';
 
 const style = {
@@ -38,7 +36,7 @@ const style = {
     p: 4,
   };
 
-const AdminEquipos = () => {
+const AgregarMiembros = () => {
 
    const nav = useNavigate();
 
@@ -76,6 +74,12 @@ const AdminEquipos = () => {
         nav("/proyectos")
       }
     };
+
+    const handleLinkAdmin = (event, message) => {
+        if (message === 'administrar') {
+          nav("/adminEquipos")
+        }
+      };
 
     const columns = useMemo(() => [
       {
@@ -236,15 +240,25 @@ const AdminEquipos = () => {
       <CasesRoundedIcon sx={{ mr: 0.5 }} fontSize="inherit" />
       Proyectos
     </Link>
+    <Link
+      underline="hover"
+      sx={{ display:'flex', alignItems:'center' }}
+      color="inherit"
+      href="/adminEquipos"
+      onClick={event => handleLinkAdmin(event, 'administrar')}
+    >
+      <GroupIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+      Administrar Equipos
+    </Link>
     <Typography
       sx={{ display:'flex', alignItems:'center' }}
       color="text.primary"
     >
-      <GroupIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-      Administrar Equipos
+      <GroupAddIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+      Agregar Miembros
     </Typography>
   </Breadcrumbs>
-  <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Administrar Equipos </Typography>
+  <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Agregar Miembros: Nombre de Equipo </Typography>
 </Box>
      <Box
        gridColumn="span 2"
@@ -322,12 +336,7 @@ const AdminEquipos = () => {
          >
   <Grid container spacing={2}>
     <Grid item xs={12} sm={6}>
-      <Typography variant='h5' sx={{ fontWeight:'bold' }}> Listado de Equipos </Typography>
-    </Grid>
-    <Grid item xs={12} sm={6}>
-     <Box container sx={{ display:'flex', justifyContent:'flex-end', alignItems:'flex-end' }}>
-        <Button variant='contained' startIcon={<GroupAddIcon />} sx={{ bgcolor:'teal', color:'white' }} onClick={handleOpen}> Nuevo Equipo </Button>
-     </Box>
+      <Typography variant='h5' sx={{ fontWeight:'bold' }}> Listado de Voluntarios </Typography>
     </Grid>
   </Grid>
 
@@ -365,9 +374,8 @@ const AdminEquipos = () => {
       'aria-labelledby': 'basic-button',
     }}
   >
-    <MenuItem onClick={handleCloseDropDown}> <EditIcon sx={{ mr:1 }} /> Editar Equipo </MenuItem>
-    <MenuItem onClick={handleCloseDropDown}> <PersonAddAltOutlinedIcon sx={{ mr:1 }} /> Añadir Miembros </MenuItem>
-    <MenuItem onClick={handleCloseDropDown}> <DeleteIcon sx={{ mr:1 }} /> Eliminar Equipo </MenuItem>
+    <MenuItem onClick={handleCloseDropDown}> <EditIcon sx={{ mr:1 }} /> Agregar Miembro </MenuItem>
+    <MenuItem onClick={handleCloseDropDown}> <EditIcon sx={{ mr:1 }} /> Quitar Miembro </MenuItem>
   </Menu>
 
   </div>}
@@ -440,4 +448,4 @@ const AdminEquipos = () => {
   )
 }
 
-export default AdminEquipos
+export default AgregarMiembros

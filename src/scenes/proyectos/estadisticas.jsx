@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import  { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, useTheme, useMediaQuery, FormControl, MenuItem, InputLabel, Select} from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -12,11 +12,7 @@ import StatChart from 'components/StatChart';
 import PieChart from 'components/PieChart';
 
 const Estadisticas = () => {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const token =params.get("prop");
-  const proyect = JSON.parse(token) 
-  console.log(proyect);
+
   //Theme
   const theme = useTheme();
 
@@ -79,7 +75,7 @@ const [views, setViews] = useState("pie1");
       Estadísticas
     </Typography>
   </Breadcrumbs>
-      <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Estadísticas para: {proyect.nombre} </Typography>
+      <Typography variant="h3" sx={{ fontWeight:'bold', mt:2 }}> Estadísticas para: [Proyecto] </Typography>
       </Box>
       <Box
         mt="40px"
@@ -110,8 +106,19 @@ const [views, setViews] = useState("pie1");
         mt="10px"
         height="auto"
         sx={{ boxShadow: 4 }}
-        >
-           <StatChart  />
+        > 
+       {/* <FormControl sx={{ mt:3, ml:3 }}>
+          <InputLabel> Vistas </InputLabel>
+          <Select
+            value={view}
+            label="Vistas"
+            onChange={(e) => setView(e.target.value)}
+          >
+            <MenuItem value="sales"> Gráfico 1 </MenuItem>
+            <MenuItem value="units"> Gráfico 2 </MenuItem>
+          </Select>
+      </FormControl> */}
+           <StatChart />
         </Box>
         <Box 
         gridColumn="span 3"
@@ -130,11 +137,8 @@ const [views, setViews] = useState("pie1");
             label="Vistas"
             onChange={(e) => setViews(e.target.value)}
           >
-            <MenuItem value="total"> Niños y Niñas </MenuItem>
-            <MenuItem value="niños"> Niños </MenuItem>
-            <MenuItem value="niñas">Niñas </MenuItem>
-            <MenuItem value="mel"> mel </MenuItem>
-            <MenuItem value=""> Desparasitados </MenuItem>
+            <MenuItem value="pie1"> Gráfico 1 </MenuItem>
+            <MenuItem value="pie2"> Gráfico 2 </MenuItem>
           </Select>
         </FormControl>
         <PieChart views={views} />

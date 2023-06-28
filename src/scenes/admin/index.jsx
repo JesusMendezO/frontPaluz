@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useState,useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import { Box, Button, Grid, useTheme, useMediaQuery} from "@mui/material";
@@ -18,133 +17,12 @@ import HomeIcon from '@mui/icons-material/Home';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AcceptTab from "components/AcceptTab";
-import clienteAxios from '../../config/clienteAxios';
-import { useGetUsuariosQuery,useGetRolesQuery,useGetTiposQuery, useGetVoluntariosQuery } from "state/api";
+
 const Admin = () => {
-    const [open, setOpen] = React.useState(false);
-    const [ejecutar, setEjecutar] = React.useState(true);
-    const [datoVo, setdatoVo] = React.useState({});
-    const [data, setData]= React.useState([]);
-    const [datosUsuario, setDatosUsuario]= React.useState({});
-    const [user, setUser]= React.useState([]);
+  
   //Theme
   const theme = useTheme();
-  let voluntarios = useGetVoluntariosQuery();
-  let usuarios ;
-   usuarios= useGetUsuariosQuery();
-let tipos;
-   tipos = useGetTiposQuery();
-  let roles;
-   roles = useGetRolesQuery();
 
-  const voluntariosO = async ()=> {
-    
-
-   
-
-    try {
-      
-      const { data1 } = await clienteAxios.get('/voluntarios/')
-      .then(function (response) {
-       // setAlerta({})
-       
-       setData(response.data);
-     
-       return
-      })
-      .catch(function (error) {
-      
-        
-      
-        console.log('error')
-       return
-      });
-    
-      
-      
-      
-  } catch (error) {
-      return
-  }
-
-  };
-  const userS= async ()=> {
-    
-
-   
-
-    try {
-      
-      const { data1 } = await clienteAxios.get('/usuarios/')
-      .then(function (response) {
-       // setAlerta({})
-       
-       setUser(response.data);
-       setEjecutar(false);
-       return
-      })
-      .catch(function (error) {
-      
-        
-      
-        console.log('error')
-       return
-      });
-    
-      
-      
-      
-  } catch (error) {
-      return
-  }
-
-  };
-  if(ejecutar){
-    voluntariosO();
-  userS();
-}
-const handleSubmit = async ()=>{
-    try {
-      
-        const { data1 } = await clienteAxios.put('/perfil/cuentausuario/', {
-           
-          
-           correo: datosUsuario.email,
-           rol:rol,
-           tipo:vol,
-           estado:est,
-           token:datosUsuario.token,
-           nombres:datosUsuario.nombres
-        
-        })
-        .then(function (response) {
-         // setAlerta({})
-          //console.log(response.data.idToken)
-            //localStorage.setItem('token',JSON.stringify(response.data) )
-            //setAuth(data)
-            setOpen(false);
-           
-        })
-        .catch(function (error) {
-          
-          
-        
-          console.log('error')
-         // document.getElementById(":r7:").value='';
-  
-          
-          
-        });
-      
-        
-        setOpen(false);
-        
-    } catch (error) {
-         
-    }
-}
-//console.log(data);
-console.log(voluntariosO);
   //BreadCrumbs
   function handleClickBreadCrumbs(event) {
   event.preventDefault();
@@ -166,54 +44,30 @@ console.log(voluntariosO);
   
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
 
-  
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setRol('');
-    setEst('');
-    setVol('');
-setEjecutar(true);
-    setOpen(false);
-   
-};
+  const handleClose = () => setOpen(false);
 
   const [openAM, setOpenAM] = React.useState(false);
-
-  
-
-
-
-  const handleOpenAM = (dato) =>{
-    
-setdatoVo(dato)
-    setOpenAM(true);
-  } 
-  const handleCloseAM = () => {
- setEjecutar(true);
-    setOpenAM(false)
-  
-  
-};
+  const handleOpenAM = () => setOpenAM(true);
+  const handleCloseAM = () => setOpenAM(false);
 
   //Rol de Usuario Select
   const [rol, setRol] = React.useState('');
   const handleChangeRol = (event) => {
     setRol(event.target.value);
-    console.log(rol);
   };
 
   // Estado De Usuario Select
   const [est, setEst] = React.useState('');
   const handleChangeEst = (event) => {
     setEst(event.target.value);
-    console.log(est);
   };
 
   //Tipo de Voluntario Select
   const [vol, setVol] = React.useState('');
   const handleChangeVol = (event) => {
     setVol(event.target.value);
-    console.log(vol);
   };
   
   
@@ -221,12 +75,12 @@ setdatoVo(dato)
 
   const columns = useMemo(() => [
     {
-      accessorKey: 'nombres',
+      accessorKey: 'firstName',
       header: 'Nombre',
       size: 1,
     },
     {
-      accessorKey: 'apellidos',
+      accessorKey: 'lastName',
       header: 'Apellido',
       size: 1,
     },
@@ -234,8 +88,119 @@ setdatoVo(dato)
   [],
 );
 
-
-if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) return "Loading...";  
+const data = [
+  {
+    id: '1',
+    firstName: 'Dylan',
+    middleName: 'Sprouse',
+    lastName: 'Murray',
+    address: '261 Erdman Ford',
+    city: 'East Daphne',
+    state: 'Kentucky',
+    country: 'United States',
+  },
+  {
+    id: '2',
+    firstName: 'Raquel',
+    middleName: 'Hakeem',
+    lastName: 'Kohler',
+    address: '769 Dominic Grove',
+    city: 'Vancouver',
+    state: 'British Columbia',
+    country: 'Canada',
+  },
+  {
+    id: '3',
+    firstName: 'Ervin',
+    middleName: 'Kris',
+    lastName: 'Reinger',
+    address: '566 Brakus Inlet',
+    city: 'South Linda',
+    state: 'West Virginia',
+    country: 'United States',
+  },
+  {
+    id: '4',
+    firstName: 'Brittany',
+    middleName: 'Kathryn',
+    lastName: 'McCullough',
+    address: '722 Emie Stream',
+    city: 'Lincoln',
+    state: 'Nebraska',
+    country: 'United States',
+  },
+  {
+    id: '5',
+    firstName: 'Branson',
+    middleName: 'John',
+    lastName: 'Frami',
+    address: '32188 Larkin Turnpike',
+    city: 'Charleston',
+    state: 'South Carolina',
+    country: 'United States',
+  },
+  {
+    id: '6',
+    firstName: 'Branson',
+    middleName: 'John',
+    lastName: 'Frami',
+    address: '32188 Larkin Turnpike',
+    city: 'Charleston',
+    state: 'South Carolina',
+    country: 'United States',
+  },
+  {
+    id: '7',
+    firstName: 'Branson',
+    middleName: 'John',
+    lastName: 'Frami',
+    address: '32188 Larkin Turnpike',
+    city: 'Charleston',
+    state: 'South Carolina',
+    country: 'United States',
+  },
+  {
+    id: '8',
+    firstName: 'Branson',
+    middleName: 'John',
+    lastName: 'Frami',
+    address: '32188 Larkin Turnpike',
+    city: 'Charleston',
+    state: 'South Carolina',
+    country: 'United States',
+  },
+  {
+    id: '9',
+    firstName: 'Branson',
+    middleName: 'John',
+    lastName: 'Frami',
+    address: '32188 Larkin Turnpike',
+    city: 'Charleston',
+    state: 'South Carolina',
+    country: 'United States',
+  },
+  {
+    id: '10',
+    firstName: 'Branson',
+    middleName: 'John',
+    lastName: 'Frami',
+    address: '32188 Larkin Turnpike',
+    city: 'Charleston',
+    state: 'South Carolina',
+    country: 'United States',
+  },
+  {
+    id: '11',
+    firstName: 'Branson',
+    middleName: 'John',
+    lastName: 'Frami',
+    address: '32188 Larkin Turnpike',
+    city: 'Charleston',
+    state: 'South Carolina',
+    country: 'United States',
+  },
+];
+  
   return (
     <Box m="1.5rem 2.5rem">
     <Box role="presentation" onClick={handleClickBreadCrumbs} sx={{ mb:3 }}>
@@ -273,20 +238,20 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
         gridColumn="span 5"
         gridRow="span 3"
         backgroundColor={theme.palette.background.alt}
-        p="1.5rem"
+        p="1.29rem"
         borderRadius="1.5rem"
-        mt="20px"
+        mt="10px"
         height="fit-content"
         sx={{ boxShadow: 4 }}
         >
           <Grid container spacing={2}>
            <Grid item xs={10}>
-             <Typography variant='h5'> Listado de Usuarios </Typography>
+             <Typography variant='h5' sx={{ fontWeight:'bold' }}> Listado de Usuarios </Typography>
            </Grid>
           </Grid>
-    <MaterialReactTable
+          <MaterialReactTable
       columns={columns}
-      data={user}
+      data={data}
       localization={MRT_Localization_ES}
       enableRowActions 
       positionActionsColumn="last" 
@@ -299,8 +264,7 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
       }}>
           <Button variant="contained" color="success" sx={{ bgcolor:'teal', color:'white' }} onClick={() => {
             handleOpen();
-            setDatosUsuario(row.original);
-         
+            console.info('Opciones', row);
           }}>
               Opciones
             </Button>
@@ -331,25 +295,9 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
               value={rol}
               onChange={handleChangeRol}
               >
-                <MenuItem value="">
-                  <em>Seleccione Rol</em>
-                </MenuItem>
-              
-                {
-                 
-        roles.data.map((dat,index)=>(
-
-           <MenuItem value={dat.idroles}>
-          {dat.descripcion}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
+                <MenuItem value={10}> Administrador </MenuItem>
+                <MenuItem value={20}> Coordinador </MenuItem>
+                <MenuItem value={30}> Voluntario </MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -366,8 +314,8 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
               value={est}
               onChange={handleChangeEst}
               >
-                <MenuItem value={1}> Activo </MenuItem>
-                <MenuItem value={0}> Inactivo </MenuItem>
+                <MenuItem value={11}> Activo </MenuItem>
+                <MenuItem value={21}> Inactivo </MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -384,25 +332,8 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
               value={vol}
               onChange={handleChangeVol}
               >
-                    <MenuItem value="">
-                  <em>Seleccione Tipo</em>
-                </MenuItem>
-              
-                {
-                 
-        tipos.data.map((dat,index)=>(
-
-           <MenuItem value={dat.idtipo}>
-          {dat.nombre}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
+                <MenuItem value={11}> Técnico </MenuItem>
+                <MenuItem value={21}> Eventual </MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -412,7 +343,7 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
                <Button variant='contained' color='error' onClick={handleClose}> Cancelar </Button>
              </Grid>
              <Grid item>
-               <Button variant='contained' sx={{ bgcolor:'teal', color:'white' }} onClick={handleSubmit}> Aceptar </Button>
+               <Button variant='contained' sx={{ bgcolor:'teal', color:'white' }} > Aceptar </Button>
              </Grid>
           </Grid>
         </Box>
@@ -467,19 +398,19 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
             width: '100%',
           }}
         >
-          <Typography>Email: {row.original.email}</Typography>
-          <Typography>Ocupacion: {row.original.ocupacion}</Typography>
-          <Typography>Tipo: {row.original.tipo}</Typography>
-          <Typography>Rol: {row.original.rol}</Typography>
+          <Typography>Address: {row.original.address}</Typography>
+          <Typography>City: {row.original.city}</Typography>
+          <Typography>State: {row.original.state}</Typography>
+          <Typography>Country: {row.original.country}</Typography>
         </Box>
       )}
       />
         </Box>
         <Box 
         gridColumn="span 3"
-        gridRow="span 4"
+        gridRow="span 3"
         backgroundColor={theme.palette.background.alt}
-        p="1.5rem"
+        p="1.22rem"
         borderRadius="1.5rem"
         mt="10px"
         height="fit-content"
@@ -487,12 +418,12 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
         >
           <Grid container spacing={2}>
            <Grid item xs={10}>
-             <Typography variant='h5'> Acceso Pendiente </Typography>
+             <Typography variant='h5' sx={{ fontWeight:'bold' }}> Acceso Pendiente </Typography>
            </Grid>
           </Grid>
           <MaterialReactTable
       columns={columns}
-      data={data[0]}
+      data={data}
       localization={MRT_Localization_ES}
       enableRowActions 
       positionActionsColumn="last" 
@@ -505,8 +436,8 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
       }}>
           <Tooltip title="Aceptar/Rechazar Usuario">
           <Button variant="contained" color="success" sx={{ bgcolor:'teal', color:'white' }} onClick={() => {
-            handleOpenAM(row.original);
-          
+            handleOpenAM();
+            console.info('Opciones', row);
           }}>
               <ManageAccountsIcon />
             </Button>
@@ -519,7 +450,13 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
         slotProps={{ backdrop: { style: { opacity: 0.2 } } }}
       >
         <Box sx={style}>
-          <AcceptTab dato={datoVo} onClose={handleCloseAM}/>
+          <AcceptTab />
+          <Divider />
+          <Grid container justifyContent='flex-end'>
+            <Grid item>
+              <Button variant='contained' color='error' onClick={handleCloseAM} sx={{ mt:2 }} > Salir </Button>
+            </Grid>
+          </Grid>
         </Box>
        </Modal>
             </div>}
@@ -572,10 +509,10 @@ if (!usuarios.isSuccess  || !roles.isSuccess|| !tipos.isSuccess || data == '' ) 
             width: '100%',
           }}
         >
-          <Typography>Cedula: {row.original.cedula}</Typography>
-          <Typography>Telefono: {row.original.telefono}</Typography>
-          <Typography>Email: {row.original.email}</Typography>
-          <Typography>Ocupacion: {row.original.descripcion}</Typography>
+          <Typography>Address: {row.original.address}</Typography>
+          <Typography>City: {row.original.city}</Typography>
+          <Typography>State: {row.original.state}</Typography>
+          <Typography>Country: {row.original.country}</Typography>
         </Box>
       )}
       />

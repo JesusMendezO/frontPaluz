@@ -27,25 +27,26 @@ import Link from '@mui/material/Link';
 import HomeIcon from '@mui/icons-material/Home';
 import CasesRoundedIcon from '@mui/icons-material/CasesRounded';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImagePicker from 'components/ImagePicker';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
-import clienteAxios from '../../config/clienteAxios';
-import { useGetSectorQuery, useGetSociosQuery,useGetUsuariosTecnicosQuery } from "state/api";
-// Array Select Multiple
 
+// Array Select Multiple
+const sector = [
+  'NUT',
+  'WASH',
+  'Salud',
+  'Educación',
+];
 
 const CrearProyecto = () => {
-  let socios = useGetSociosQuery();
-  let sector = useGetSectorQuery();
-  let usuarios = useGetUsuariosTecnicosQuery()
-  console.log(socios.isSuccess);
+
   const nav = useNavigate();
 
   //Theme
   const theme = useTheme();
-  const [image, setImage] = React.useState('');
+
   function handleClickBreadCrumbs(event) {
     event.preventDefault();
     console.info('You clicked a breadcrumb.');
@@ -91,70 +92,6 @@ const CrearProyecto = () => {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
-//Select Coordinador Proyecto
-const [corP, setCorP] = React.useState([]);
-const handleChangeCorP = (event) => {
-  const {
-    target: { value },
-  } = event;
-  setCorP(
-    // On autofill we get a stringified value.
-    typeof value === 'string' ? value.split(',') : value,
-  );
-};
-//Select Coordinador ME
-const [corMe, setCorMe] = React.useState([]);
-const handleChangeCorMe = (event) => {
-  const {
-    target: { value },
-  } = event;
-  setCorMe(
-    // On autofill we get a stringified value.
-    typeof value === 'string' ? value.split(',') : value,
-  );
-};
-//Select Coordinador Sum
-const [corSum, setCorSum] = React.useState([]);
-const handleChangeCorSum = (event) => {
-  const {
-    target: { value },
-  } = event;
-  setCorSum(
-    // On autofill we get a stringified value.
-    typeof value === 'string' ? value.split(',') : value,
-  );
-};
-//Select Coordinador Lo
-const [corLo, setCorLo] = React.useState([]);
-const handleChangeCorLo = (event) => {
-  const {
-    target: { value },
-  } = event;
-  setCorLo(
-    // On autofill we get a stringified value.
-    typeof value === 'string' ? value.split(',') : value,
-  );
-};
-
-//Modal Handlers
-const [openAlert, setOpenAlert] = React.useState(false);
-const handleOpenAlert = () => {
-  setOpenAlert(true);
-  handleCloseAlert();
-}
-const handleCloseAlert = () => setTimeout(() => {
-  setValueFI(null);
-setValueFF(null)
-setCorLo([]);
-setCorMe([]);
-setCorP([]);
-setCorSum([]);
-setSectorOpc([]);
-setSoc('');
-setData([{indicador:"",metas:"",mediosVerif:""}]);
-  setOpenAlert(false);
-}, 2000)
-
 
   //Routes
  const handleLinkClick = (event, message) => {
@@ -176,12 +113,6 @@ const handleLinkProjects = (event, message) => {
   }
 };
 
-const handleImage= (image) => {
-  
-     setImage(image)
-   
-   
- };
 //Modal Styles
 const style = {
   position: 'inherit',
@@ -196,85 +127,20 @@ const style = {
   p: 4, 
 };
 
-const handleSubmit = async event=> {
-  event.preventDefault();
-  let dataform = new FormData(event.currentTarget);
-  console.log(dataform.get('nombreProyecto'));
- console.log(dataform.get('codigoProyecto'));
- console.log(dataform.get('descripcion'));
-
-  try {
-    
-      const { data1 } = await clienteAxios.post('/crearproyectos/', {
-
-       nombre:(dataform.get('nombreProyecto')),
-       descripcion :(dataform.get('descripcion')),
-      estado:1,
-      grupos : null,
-      codigo : (dataform.get('codigoProyecto')),
-      fechain: valueFI,
-       fechafin : valueFF,
-      socios : soc,
-       indicadores: JSON.stringify(data),
-       coordinador:corP,
-       coordinador_ms:corMe,
-       coordinador_cs:corSum,
-       coordinador_logistica:corLo,
-       sector:sectorOpc,
-       logo:image,
-
-
-
-
-//        nombres: (dataform.get('nombreProyecto')),
-//        apellidos: (dataform.get('codigoProyecto')),
-//        cedula: (dataform.get('descripcion')),
-//        correo: dataform.get('email'),
-//        telefono: dataform.get('textmask'),
-//        //fnacimiento:new Date(selectedDate).toLocaleDateString('es-ES') ,
-//        ocupacion: dataform.get('ocupacion'),
-//        direccion: dataform.get('direccion'),
-      })
-      .then(function (response) {
-          //console.log(response.data.idToken)
-          //localStorage.setItem('token',JSON.stringify(response.data) )
-          //setAuth(data)
-          //event.target.reset();
-       
-     })
-     .catch(function (error) {
-//        event.preventDefault();
-      
-    
-//        console.log('error')
-//       // document.getElementById(":r7:").value='';
-
-      
-     
-      });
-  
-    
-     console.log(data1)
-    
- } catch (error) {
-    
-  }
-
-handleOpenAlert();
-
-};
-
-
-
-
+//Modal Handlers
 const [open, setOpen] = React.useState(false);
 const handleOpen = () => setOpen(true);
 const handleClose = () => setOpen(false);
 
+const [openAlert, setOpenAlert] = React.useState(false);
+const handleOpenAlert = () => {
+  setOpenAlert(true);
+  handleCloseAlert();
+}
+const handleCloseAlert = () => setTimeout(() => {
+  setOpenAlert(false);
+}, 2000);
 
-
-
-if (!socios.isSuccess || !usuarios.isSuccess || !sector.isSuccess) return "Loading...";
 return (
 
 <Box m="1.5rem 2.5rem">
@@ -328,7 +194,6 @@ return (
 <Container>
   <Card sx={{ borderRadius:8, boxShadow:5, bgcolor:theme.palette.background.alt }}>
     <CardContent>
-    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
     <Grid container spacing={2}>
       <Grid item xs={11} sm={6}>
         <Typography variant="h5" className='text-center' component="div" sx={{ ml:2, mb:1, mt:3, fontWeight:'bold' }}>
@@ -336,7 +201,7 @@ return (
         </Typography>
       </Grid>
       <Grid item xs={12} sm={6} >
-        <ImagePicker image={handleImage} />
+        <ImagePicker />
       </Grid>
     </Grid>
      <Box>
@@ -402,23 +267,12 @@ return (
                     value={soc}
                     onChange={handleChange}
                   >
-                      
-              
-                {
-                 
-      socios.data.map((dat,index)=>(
-
-           <MenuItem value={dat.idsocios}>
-          {dat.nombre}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
+                    <MenuItem value="">
+                      <em> Seleccione un Socio </em>
+                    </MenuItem>
+                    <MenuItem value={11}> IRC </MenuItem>
+                    <MenuItem value={21}> FHV </MenuItem>
+                    <MenuItem value={31}> UNICEF </MenuItem>
                   </Select>
               </FormControl>
             </Grid>
@@ -434,30 +288,21 @@ return (
                   onChange={handleChangeSector}
                   input={<OutlinedInput label="Sector" />}
                   >
-                 
-              
-                {
-                 
-      sector.data.map((dat,index)=>(
-
-           <MenuItem value={dat.idsector}>
-          {dat.nombre}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
+                    {sector.map((nameSec) => (
+                     <MenuItem
+                      key={nameSec}
+                      value={nameSec}
+                     >
+                     {nameSec}
+                     </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField 
               id="descripcion" 
-              name="descripcion" 
+              name="descripción" 
               label="Descripción" 
               fullWidth 
               required 
@@ -524,136 +369,46 @@ return (
               <Button variant='contained' sx={{ bgcolor:'teal', color:'white', borderRadius:2 }} fullWidth onClick={handleClick}> Añadir Más </Button>
             </Grid>
           </Grid>
+          {/*<p>{JSON.stringify(data)}</p>*/}
           <Divider sx={{ mt:4 }}>
             <Chip label="GESTIÓN DE EQUIPOS" />
           </Divider>
           <Grid container spacing={2} sx={{ mt:1 }}>
             <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label"> Coord Proyecto </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="coordProyecto"
-                  value={corP}
-                  onChange={handleChangeCorP}
-                  input={<OutlinedInput label="coordProyecto" />}
-                  >
-                   
-              
-                {
-                 
-      usuarios.data.map((dat,index)=>(
-
-           <MenuItem value={dat.id}>
-          {dat.nombres+' '+dat.apellidos}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
-                </Select>
-              </FormControl>
-             
+              <TextField
+                name="coordProyecto"
+                required
+                fullWidth
+                id="coordProyecto"
+                label="Coordinador de Proyecto"
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label"> Coordinador de M/E</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Coordinador de M/E"
-                  value={corMe}
-                  onChange={handleChangeCorMe}
-                  input={<OutlinedInput label="Coordinador de M/E" />}
-                  >
-                   
-              
-                {
-                 
-      usuarios.data.map((dat,index)=>(
-
-           <MenuItem value={dat.id}>
-          {dat.nombres+' '+dat.apellidos}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
-                </Select>
-              </FormControl>
-             
+              <TextField
+                required
+                fullWidth
+                id="coordME"
+                label="Coordinador de M/E"
+                name="coordME"
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label"> Coordinador de Cadena de Suministros</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Coordinador de Cadena de Suministros"
-                  value={corSum}
-                  onChange={handleChangeCorSum}
-                  input={<OutlinedInput label="Coordinador de Cadena de Suministros" />}
-                  >
-                   
-              
-                {
-                 
-      usuarios.data.map((dat,index)=>(
-
-           <MenuItem value={dat.id}>
-          {dat.nombres+' '+dat.apellidos}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
-                </Select>
-              </FormControl>
+              <TextField
+                required
+                fullWidth
+                id="coordCadenaSum"
+                label="Coordinador de Cadena de Suministros"
+                name="coordCadenaSum"
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label"> Coordinador de Logística</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Coordinador de Cadena de Suministros"
-                  value={corLo}
-                  onChange={handleChangeCorLo}
-                  input={<OutlinedInput label="Coordinador de Logística" />}
-                  >
-                   
-              
-                {
-                 
-      usuarios.data.map((dat,index)=>(
-
-           <MenuItem value={dat.id}>
-          {dat.nombres+' '+dat.apellidos}
-          </MenuItem>
-          
-          
-        ))
-       
-
-
-
-      }
-                </Select>
-              </FormControl>
-             
+              <TextField
+                required
+                fullWidth
+                id="coordLog"
+                label="Coordinador de Logística"
+                name="coordLog"
+              />
             </Grid>
           </Grid>
           <Divider sx={{ mt:5 }}></Divider>
@@ -662,14 +417,27 @@ return (
               <Button variant='contained' color='error' size='large' fullWidth onClick={handleOpen}> Cancelar </Button>
             </Grid>
             <Grid item sm={3} xs={6}>
-              <Button type="submit" variant='contained' sx={{ bgcolor:'teal', color:'white' }} size='large'  fullWidth> Guardar </Button>
+              <Button variant='contained' sx={{ bgcolor:'teal', color:'white' }} size='large' fullWidth onClick={handleOpenAlert}> Guardar </Button>
             </Grid>
           </Grid>
         </Box>
-    </Box>
-  
     </CardContent>
   </Card>
+    <Modal
+        open={openAlert}
+        onClose={handleCloseAlert}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" className='text-center'>
+            <TaskAltOutlinedIcon color='success' sx={{ fontWeight:'bold',mt:3, fontSize:80 }}/>
+          </Typography>
+          <Typography id="modal-modal-description" className='text-center' sx={{ mt: 2, fontSize:20, fontWeight:'bold' }}>
+            ¡El proyecto se ha guardado exitosamente!
+          </Typography>
+        </Box>
+      </Modal>
   <Modal
     open={open}
     onClose={handleClose}
@@ -690,21 +458,6 @@ return (
           </Grid>
         </Box>
     </Modal>
-    <Modal
-        open={openAlert}
-        onClose={handleCloseAlert}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" className='text-center'>
-            <TaskAltOutlinedIcon color='success' sx={{ fontWeight:'bold',mt:3, fontSize:80 }}/>
-          </Typography>
-          <Typography id="modal-modal-description" className='text-center' sx={{ mt: 2, fontSize:20, fontWeight:'bold' }}>
-            ¡El proyecto se ha guardado exitosamente!
-          </Typography>
-        </Box>
-      </Modal>
 </Container>
 </Box>
 </Box>
