@@ -13,7 +13,9 @@ const PieChart = ({ views }) => {
   mel  = useGetMelQuery();
   var mostrar;
   console.log(data);
-
+  console.log(ninos);
+  console.log(ninas);
+  console.log(mel);
     //Theme
     const theme = useTheme();
 
