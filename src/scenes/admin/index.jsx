@@ -398,10 +398,10 @@ const data = [
             width: '100%',
           }}
         >
-          <Typography>Address: {row.original.address}</Typography>
-          <Typography>City: {row.original.city}</Typography>
-          <Typography>State: {row.original.state}</Typography>
-          <Typography>Country: {row.original.country}</Typography>
+          <Typography>Email: {row.original.email}</Typography>
+          <Typography>Ocupacion: {row.original.ocupacion}</Typography>
+          <Typography>Tipo: {row.original.tipo}</Typography>
+          <Typography>Rol: {row.original.roles}</Typography>
         </Box>
       )}
       />
