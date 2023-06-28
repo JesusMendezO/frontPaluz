@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { ResponsivePie } from '@nivo/pie';
 import { useTheme } from "@mui/material";
-import { useGetSalesQuery,useGetTotalQuery,useGetNinosQuery,useGetTotalesQuery,useGetNinasQuery } from "state/api";
+import { useGetSalesQuery,useGetTotalQuery,useGetNinosQuery,useGetTotalesQuery,useGetNinasQuery,useGetMelQuery } from "state/api";
 const PieChart = ({ views }) => {
   
   const { data, isLoading } =useGetTotalesQuery();
@@ -9,13 +9,15 @@ const PieChart = ({ views }) => {
   ninos  = useGetNinosQuery();
   let ninas = 0;
   ninas  = useGetNinasQuery();
+  let mel = 0;
+  mel  = useGetMelQuery();
   var mostrar;
   console.log(data);
 
     //Theme
     const theme = useTheme();
 
-      if (!data || isLoading ||!ninos.isSuccess || !ninas.isSuccess
+      if (!data || isLoading ||!ninos.isSuccess || !ninas.isSuccess || !mel.isSuccess
         ) return "Cargando...";
 
   const dataTotales = Object.entries(data).map(
@@ -39,6 +41,13 @@ const PieChart = ({ views }) => {
       value: sales
     })
   );
+  const dataMel = Object.entries(mel.data).map(
+    ([category, sales], i) => ({
+      id: category,
+      label: category,
+      value: sales
+    })
+  );
   if(views === "total" ){
     mostrar=dataTotales;
   }
@@ -47,6 +56,9 @@ const PieChart = ({ views }) => {
   }
   if(views === "niñas" ){
     mostrar=dataNinas;
+  }
+  if(views === "mel" ){
+    mostrar=dataMel;
   }
   console.log(mostrar)
   return (
