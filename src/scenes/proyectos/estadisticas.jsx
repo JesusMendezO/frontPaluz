@@ -44,7 +44,7 @@ const handleLinkProjects = (event, message) => {
 };
 
 const [view, setView] = useState("sales");
-const [views, setViews] = useState("pie1");
+const [views, setViews] = useState("total");
 
   return (
     <Box m="1.5rem 2.5rem">
