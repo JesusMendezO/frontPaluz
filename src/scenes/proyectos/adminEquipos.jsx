@@ -24,6 +24,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CasesRoundedIcon from '@mui/icons-material/CasesRounded';
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import GroupIcon from '@mui/icons-material/Group';
+import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import clienteAxios from '../../config/clienteAxios';
 import { useGetEquiposQuery } from "state/api";
 const style = {
@@ -48,9 +49,20 @@ const AdminEquipos = () => {
         console.info('You clicked a breadcrumb.');
     }
 
+    //Modal Handlers
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [openAlert, setOpenAlert] = React.useState(false);
+    const handleOpenAlert = () => {
+    setOpenAlert(true);
+    handleCloseAlert();
+    handleClose();
+   }
+   const handleCloseAlert = () => setTimeout(() => {
+     setOpenAlert(false);
+   }, 2000);
 
     const theme = useTheme();
 
@@ -135,7 +147,7 @@ const AdminEquipos = () => {
             //localStorage.setItem('token',JSON.stringify(response.data) )
             //setAuth(data)
             //event.target.reset();
-            setOpen(false);
+            handleOpenAlert();
        })
        .catch(function (error) {
   //        event.preventDefault();
@@ -371,7 +383,21 @@ const AdminEquipos = () => {
     </Box>
   )}
   />
-         
+  <Modal
+        open={openAlert}
+        onClose={handleCloseAlert}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" className='text-center'>
+            <TaskAltOutlinedIcon color='success' sx={{ fontWeight:'bold',mt:3, fontSize:80 }}/>
+          </Typography>
+          <Typography id="modal-modal-description" className='text-center' sx={{ mt: 2, fontSize:20, fontWeight:'bold' }}>
+            ¡El equipo se ha creado exitosamente!
+          </Typography>
+        </Box>
+      </Modal>       
   </Box>
   </Container>
   </Box>
