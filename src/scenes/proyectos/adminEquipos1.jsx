@@ -165,22 +165,13 @@ const AdminEquipos = () => {
              </Typography>
              <Divider />
              <Grid container spacing={2} mt={2} mb={3}>
-         <Grid item xs={12} sm={6}>
+         <Grid item xs={12} sm={12}>
             <TextField
               name="nombreEquipo"
               required
               fullWidth
               id="nombreEquipo"
               label="Nombre de Equipo"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              id="miembros"
-              label="Miembros"
-              name="miembros"
             />
           </Grid>
           <Grid item xs={12} sm={12}>
