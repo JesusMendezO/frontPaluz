@@ -17,7 +17,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import logo from 'assets/paluz-logo.png';
-import clienteAxios from '../../config/clienteAxios'
+import clienteAxios from '../../config/clienteAxios';
+import { useKonamiCode } from 'components/SecretCode/useKonamiCode';
 
 function Copyright(props) {
   return (
@@ -41,9 +42,14 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [alerta, setAlerta] = useState({})
   const navigate = useNavigate();
-  
-  
+
+  const konami = useKonamiCode();
+
   const nav = useNavigate();
+
+ if(konami){
+    nav("/secret")
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();

@@ -22,6 +22,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import HomeIcon from '@mui/icons-material/Home';
 import CasesRoundedIcon from '@mui/icons-material/CasesRounded';
+import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import GroupIcon from '@mui/icons-material/Group';
 
 const style = {
@@ -72,6 +73,12 @@ const AdminEquipos = () => {
     const handleLinkProjects = (event, message) => {
       if (message === 'proyectos') {
         nav("/proyectos")
+      }
+    };
+
+    const handleLinkAdd = (event, message) => {
+      if (message === 'agregar') {
+        nav("/agregarMiembros")
       }
     };
 
@@ -363,6 +370,7 @@ const AdminEquipos = () => {
     }}
   >
     <MenuItem onClick={handleCloseDropDown}> <EditIcon sx={{ mr:1 }} /> Editar Equipo </MenuItem>
+    <MenuItem onClick={event => handleLinkHome(event, 'agregar')}> <PersonAddAltOutlinedIcon sx={{ mr:1 }} /> Añadir Miembros </MenuItem>
     <MenuItem onClick={handleCloseDropDown}> <DeleteIcon sx={{ mr:1 }} /> Eliminar Equipo </MenuItem>
   </Menu>
 
