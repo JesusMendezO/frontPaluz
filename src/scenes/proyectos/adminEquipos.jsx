@@ -24,7 +24,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import CasesRoundedIcon from '@mui/icons-material/CasesRounded';
 import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 import GroupIcon from '@mui/icons-material/Group';
-
+import clienteAxios from '../../config/clienteAxios';
+import { useGetEquiposQuery } from "state/api";
 const style = {
     position: 'absolute',
     top: '50%',
@@ -39,7 +40,7 @@ const style = {
   };
 
 const AdminEquipos = () => {
-
+  let equipos = useGetEquiposQuery();
    const nav = useNavigate();
 
     function handleClickBreadCrumbs(event) {
@@ -85,137 +86,80 @@ const AdminEquipos = () => {
     const columns = useMemo(() => [
       {
         accessorKey: 'id',
-        header: 'ID',
+        header: 'id',
         size: 10,
       },
       {
-        accessorKey: 'firstName',
-        header: 'First Name',
+        accessorKey: 'nombre',
+        header: 'Nombre',
       },
       {
-        accessorKey: 'middleName',
-        header: 'Middle Name',
+        accessorKey: 'descripcion',
+        header: 'Descripcion',
       },
       {
-        accessorKey: 'lastName',
-        header: 'Last Name',
+        accessorKey: 'estado',
+        header: 'Estado',
       },
     ],
     [],
   );
+  const handleSubmit = async event=> {
+    event.preventDefault();
+    let dataform = new FormData(event.currentTarget);
   
-  const data = [
-    {
-      id: '1',
-      firstName: 'Dylan',
-      middleName: 'Sprouse',
-      lastName: 'Murray',
-      address: '261 Erdman Ford',
-      city: 'East Daphne',
-      state: 'Kentucky',
-      country: 'United States',
-    },
-    {
-      id: '2',
-      firstName: 'Raquel',
-      middleName: 'Hakeem',
-      lastName: 'Kohler',
-      address: '769 Dominic Grove',
-      city: 'Vancouver',
-      state: 'British Columbia',
-      country: 'Canada',
-    },
-    {
-      id: '3',
-      firstName: 'Ervin',
-      middleName: 'Kris',
-      lastName: 'Reinger',
-      address: '566 Brakus Inlet',
-      city: 'South Linda',
-      state: 'West Virginia',
-      country: 'United States',
-    },
-    {
-      id: '4',
-      firstName: 'Brittany',
-      middleName: 'Kathryn',
-      lastName: 'McCullough',
-      address: '722 Emie Stream',
-      city: 'Lincoln',
-      state: 'Nebraska',
-      country: 'United States',
-    },
-    {
-      id: '5',
-      firstName: 'Branson',
-      middleName: 'John',
-      lastName: 'Frami',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      country: 'United States',
-    },
-    {
-      id: '6',
-      firstName: 'Branson',
-      middleName: 'John',
-      lastName: 'Frami',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      country: 'United States',
-    },
-    {
-      id: '7',
-      firstName: 'Branson',
-      middleName: 'John',
-      lastName: 'Frami',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      country: 'United States',
-    },
-    {
-      id: '8',
-      firstName: 'Branson',
-      middleName: 'John',
-      lastName: 'Frami',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      country: 'United States',
-    },
-    {
-      id: '9',
-      firstName: 'Branson',
-      middleName: 'John',
-      lastName: 'Frami',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      country: 'United States',
-    },
-    {
-      id: '10',
-      firstName: 'Branson',
-      middleName: 'John',
-      lastName: 'Frami',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      country: 'United States',
-    },
-    {
-      id: '11',
-      firstName: 'Branson',
-      middleName: 'John',
-      lastName: 'Frami',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      country: 'United States',
-    },
-  ];
+  
+    try {
+      
+        const { data1 } = await clienteAxios.post('/crearequipos/', {
+  
+         nombre:(dataform.get('nombreEquipo')),
+         descripcion :(dataform.get('descripcion'))
+       
+       
+  
+  
+  
+  
+  //        nombres: (dataform.get('nombreProyecto')),
+  //        apellidos: (dataform.get('codigoProyecto')),
+  //        cedula: (dataform.get('descripcion')),
+  //        correo: dataform.get('email'),
+  //        telefono: dataform.get('textmask'),
+  //        //fnacimiento:new Date(selectedDate).toLocaleDateString('es-ES') ,
+  //        ocupacion: dataform.get('ocupacion'),
+  //        direccion: dataform.get('direccion'),
+        })
+        .then(function (response) {
+            //console.log(response.data.idToken)
+            //localStorage.setItem('token',JSON.stringify(response.data) )
+            //setAuth(data)
+            //event.target.reset();
+            setOpen(false);
+       })
+       .catch(function (error) {
+  //        event.preventDefault();
+        
+      
+  //        console.log('error')
+  //       // document.getElementById(":r7:").value='';
+  
+        
+       
+        });
+    
+        
+       console.log(data1);
+      
+   } catch (error) {
+      
+    }
+  
+ 
+  
+  };
+ console.log(equipos);
+  if (!equipos.isSuccess ) return "Loading...";
 
   return (
     <Box m="1.5rem 2.5rem">
@@ -269,28 +213,19 @@ const AdminEquipos = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
          >
-           <Box sx={style}>
+           <Box component="form" noValidate onSubmit={handleSubmit} sx={style}>
              <Typography variant="h4" component="div" sx={{ mb:2, fontWeight:'bold' }}>
                  Crear Equipo
              </Typography>
              <Divider />
              <Grid container spacing={2} mt={2} mb={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
             <TextField
               name="nombreEquipo"
               required
               fullWidth
               id="nombreEquipo"
               label="Nombre de Equipo"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              id="miembros"
-              label="Miembros"
-              name="miembros"
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -309,7 +244,7 @@ const AdminEquipos = () => {
               <Button variant='contained' color='error' size='large' fullWidth onClick={handleClose}> Cancelar </Button>
             </Grid>
             <Grid item sm={6} xs={6}>
-              <Button variant='contained' sx={{ bgcolor:'teal', color:'white' }} size='large' fullWidth> Guardar </Button>
+              <Button type="submit"  variant='contained' sx={{ bgcolor:'teal', color:'white' }} size='large' fullWidth> Guardar </Button>
             </Grid>
           </Grid>
            </Box>
@@ -337,7 +272,7 @@ const AdminEquipos = () => {
 
   <MaterialReactTable 
   columns={columns}
-  data={data}
+  data={equipos.data}
   localization={MRT_Localization_ES}
   enableRowActions 
   positionActionsColumn="last" 
