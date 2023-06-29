@@ -370,7 +370,7 @@ const AdminEquipos = () => {
     }}
   >
     <MenuItem onClick={handleCloseDropDown}> <EditIcon sx={{ mr:1 }} /> Editar Equipo </MenuItem>
-    <MenuItem onClick={event => handleLinkHome(event, 'agregar')}> <PersonAddAltOutlinedIcon sx={{ mr:1 }} /> Añadir Miembros </MenuItem>
+    <MenuItem onClick={event => handleLinkAdd(event, 'agregar')}> <PersonAddAltOutlinedIcon sx={{ mr:1 }} /> Añadir Miembros </MenuItem>
     <MenuItem onClick={handleCloseDropDown}> <DeleteIcon sx={{ mr:1 }} /> Eliminar Equipo </MenuItem>
   </Menu>
 
